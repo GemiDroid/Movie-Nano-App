@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "417259371551",
+    "firebase_url": "https://movie-app-140822.firebaseio.com",
+    "project_id": "movie-app-140822",
+    "storage_bucket": "movie-app-140822.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417259371551:android:039d52154f975a3a",
+        "android_client_info": {
+          "package_name": "com.gemi.ahmedgemi.movie_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417259371551-49o41iuolp4tu6o5elkjj1vlh6cpuqsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMnYomZiwQeMyB-DuUIpjMBhBWyxt_IZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
