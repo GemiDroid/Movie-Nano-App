@@ -46,9 +46,11 @@ public class PosterFragment extends Fragment {
 
     //  private PosterFragment poster_fragment;
 
-    private String movies_url_top = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
+    private static final String KEY="6c08ba20de298358919a0cfd7c0c066a";
 
-    private String movies_url_popular = "https://api.themoviedb.org/3/movie/popular?api_key=";
+    private String movies_url_top = "https://api.themoviedb.org/3/movie/top_rated?api_key="+KEY;
+
+    private String movies_url_popular = "https://api.themoviedb.org/3/movie/popular?api_key="+KEY;
 
     String[] Categories = {"Most Popular", "Highest Rated", "Favourites"};
 
@@ -144,7 +146,7 @@ public class PosterFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(context, "Plase,wait getting posters ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Please,wait getting posters ", Toast.LENGTH_SHORT).show();
         }
 
         @Override

@@ -36,6 +36,7 @@ public class MovieFragment extends Fragment {
 
     DBHelper.database data;
     String poster_images_url = "http://image.tmdb.org/t/p/w185/";
+    private static final String KEY="6c08ba20de298358919a0cfd7c0c066a";
     TextView title, overview, rate, vote, author, content;
     ImageView movie_image, movie_star;
 
@@ -174,11 +175,11 @@ public class MovieFragment extends Fragment {
 
 
     public void getTrailers() {
-        new Async_Trailer().execute("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=");
+        new Async_Trailer().execute("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key="+KEY);
     }
 
     public void getReviews() {
-        new Async_Reviews().execute("https://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=");
+        new Async_Reviews().execute("https://api.themoviedb.org/3/movie/" + id + "/reviews?api_key="+KEY);
     }
 
     public class Async_Trailer extends AsyncTask<String, Void, Void>
