@@ -1,8 +1,23 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.gemi.ahmedgemi.movie_app"
@@ -49,5 +64,8 @@ dependencies {
     compile 'com.google.apis:google-api-services-youtube:v3-rev178-1.22.0'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile 'com.android.support:multidex:1.0.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true;
+    }
 }
 apply plugin: 'com.google.gms.google-services'
