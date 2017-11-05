@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +57,8 @@ public class PosterFragment extends Fragment  {
     private String movies_url_popular = "https://api.themoviedb.org/3/movie/popular?api_key="+KEY;
 
     String[] Categories = {"Most Popular", "Highest Rated", "Favourites"};
+
+    int currentVisiblePosition = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,21 @@ public class PosterFragment extends Fragment  {
         data = new DBHelper.database(getActivity());
         adapter = new Movies_Adapter(getActivity(), get_list_of_favourites());
         recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPause() {
+
+        currentVisiblePosition = ((LinearLayoutManager)recycler.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+
+        (recycler.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+        currentVisiblePosition = 0;
+        super.onResume();
     }
 
     public List<Movie_Class> get_list_of_favourites() {
