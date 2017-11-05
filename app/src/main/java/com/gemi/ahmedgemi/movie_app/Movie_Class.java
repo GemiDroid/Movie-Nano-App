@@ -24,6 +24,13 @@ public class Movie_Class {
         this.voting = voting;
     }
 
+    public Movie_Class(int id, String title, String voting, String poster_img) {
+        this.id = id;
+        this.title = title;
+        this.voting = voting;
+        this.poster_img = poster_img;
+    }
+
     public Movie_Class(String posters) {
         this.poster_img = posters;
     }

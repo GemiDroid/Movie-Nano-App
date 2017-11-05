@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Home">
+        <activity android:name=".Home"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,6 +31,7 @@
         </receiver>
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".Movie_Details"
             android:label="@string/about_movie">
            <!-- <intent-filter>
@@ -38,6 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
+
+        <provider
+            android:authorities="com.gemi.ahmedgemi.movie_app.MyContentProvider"
+            android:name=".MyContentProvider">
+        </provider>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d6ac7e7035485df00ec6771252520938adea4c14" />

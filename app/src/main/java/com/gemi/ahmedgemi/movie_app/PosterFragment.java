@@ -3,8 +3,11 @@ package com.gemi.ahmedgemi.movie_app;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +35,7 @@ import java.util.List;
 /**
  * Created by Ahmed Gemi on 13/10/2017.
  */
-public class PosterFragment extends Fragment {
+public class PosterFragment extends Fragment  {
 
     RecyclerView recycler;
     List<Movie_Class> list_movie;
@@ -110,11 +113,48 @@ public class PosterFragment extends Fragment {
 
     }
 
-    public void get_favourites() {
-        data = new DBHelper.database(getActivity());
-        adapter = new Movies_Adapter(getActivity(), data.get_from_favourites());
-        recycler.setAdapter(adapter);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        // Store View ...
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    // Restore View ...
+    }
+
+    private void get_favourites() {
+
+        data = new DBHelper.database(getActivity());
+        adapter = new Movies_Adapter(getActivity(), get_list_of_favourites());
+        recycler.setAdapter(adapter);
+    }
+
+    public List<Movie_Class> get_list_of_favourites() {
+
+        List<Movie_Class> data = new ArrayList<>();
+
+        String URL = "content://com.gemi.ahmedgemi.movie_app.MyContentProvider";
+
+        Uri students = Uri.parse(URL);
+        Cursor c = getActivity().managedQuery(students, null, null, null, "Title");
+        int _id = c.getColumnIndex("ID");
+        int _title = c.getColumnIndex("Title"); //
+        int _rate = c.getColumnIndex("Rate"); //
+        int _image = c.getColumnIndex("Poster_Url");
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            Movie_Class movie_class = new Movie_Class(c.getInt(_id), c.getString(_title),
+                    c.getString(_rate), c.getString(_image));
+            data.add(movie_class);
+
+        }
+
+        return data;
     }
 
     public void get_movies(String url) {

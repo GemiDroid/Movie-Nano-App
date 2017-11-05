@@ -1,7 +1,10 @@
 package com.gemi.ahmedgemi.movie_app;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +40,7 @@ public class MovieFragment extends Fragment {
 
     DBHelper.database data;
     String poster_images_url = "http://image.tmdb.org/t/p/w185/";
-    private static final String KEY="6c08ba20de298358919a0cfd7c0c066a";
+    private static final String KEY = "6c08ba20de298358919a0cfd7c0c066a";
     TextView title, overview, rate, vote, author, content;
     ImageView movie_image, movie_star;
 
@@ -62,8 +66,9 @@ public class MovieFragment extends Fragment {
     Bundle args;
     Bundle i;
     static int id;
-
-
+    static String image_url;
+    ScrollView scl_movie_details;
+    int ScrollPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,25 @@ public class MovieFragment extends Fragment {
 
         i = getActivity().getIntent().getExtras();
         args = getArguments();
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        scl_movie_details.setVerticalScrollbarPosition(ScrollPosition);
+        restoreData();
+    }
+
+    private void restoreData() {
+
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ScrollPosition = scl_movie_details.getVerticalScrollbarPosition();
     }
 
 
@@ -95,6 +119,8 @@ public class MovieFragment extends Fragment {
         movie_image = (ImageView) v.findViewById(R.id.movie_img);
         movie_star = (ImageView) v.findViewById(R.id.movie_star_img);
 
+        scl_movie_details = v.findViewById(R.id.scl_movie_details);
+
 
         trailer_recycler = (RecyclerView) v.findViewById(R.id.trailers_recycler);
         trailer_recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -111,7 +137,7 @@ public class MovieFragment extends Fragment {
         // listview_review = (ListView) v.findViewById(R.id.reviewsList);
         //   listview_review.addHeaderView(v);
         //   listview_review.setScrollingCacheEnabled(true);
-        final String image_url;
+
 
         // final Bundle bundle = getActivity().getIntent().getExtras();
         if (getArguments() != null) {
@@ -151,12 +177,10 @@ public class MovieFragment extends Fragment {
             public void onClick(View v) {
 
 
-                data = new DBHelper.database(getActivity());
+              /*  data = new DBHelper.database(getActivity());*/
 
                 boolean added_to_favourites =
-                        data.add_to_favourites(id, title.getText().toString(),
-                                overview.getText().toString(), rate.getText().toString(),
-                                vote.getText().toString(), image_url);
+                        isAdd();
 
                 if (added_to_favourites) {
                     Toast.makeText(getActivity(), "Movie Added to Favourites :) ", Toast.LENGTH_LONG).show();
@@ -173,13 +197,37 @@ public class MovieFragment extends Fragment {
 
     }
 
+    private boolean isAdd() {
+
+        // Add a new student record
+        ContentValues values = new ContentValues();
+        values.put(MyContentProvider.TITLE,
+                title.getText().toString());
+
+        values.put(MyContentProvider.RATE,
+                rate.getText().toString());
+
+        values.put(MyContentProvider.POSTER,
+                image_url);
+
+
+        /*Uri uri = getActivity().getContentResolver().insert(
+                MyContentProvider.CONTENT_URI, values);*/
+        getActivity().getContentResolver().insert(MyContentProvider.CONTENT_URI, values);
+
+      /*  Toast.makeText(getBaseContext(),
+                uri.toString(), Toast.LENGTH_LONG).show();*/
+
+        return true;
+    }
+
 
     public void getTrailers() {
-        new Async_Trailer().execute("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key="+KEY);
+        new Async_Trailer().execute("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=" + KEY);
     }
 
     public void getReviews() {
-        new Async_Reviews().execute("https://api.themoviedb.org/3/movie/" + id + "/reviews?api_key="+KEY);
+        new Async_Reviews().execute("https://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=" + KEY);
     }
 
     public class Async_Trailer extends AsyncTask<String, Void, Void>
@@ -318,7 +366,7 @@ public class MovieFragment extends Fragment {
 
                 }
             } catch (NullPointerException e) {
-                Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_LONG).show();
             }
 
         }
