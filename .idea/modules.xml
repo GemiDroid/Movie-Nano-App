@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Movie_App Nano Final.iml" filepath="$PROJECT_DIR$/Movie_App Nano Final.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Movie-Nano-App.iml" filepath="$PROJECT_DIR$/Movie-Nano-App.iml" />
+      <module fileurl="file://D:\My Apps\Movie-Nano-App\Movie_App Nano Final.iml" filepath="D:\My Apps\Movie-Nano-App\Movie_App Nano Final.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
