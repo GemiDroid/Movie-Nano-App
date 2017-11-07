@@ -27,6 +27,8 @@ public class Movies_Adapter extends RecyclerView.Adapter<Details_Holder> {
     static Configuration config;
 
 
+
+
     public Movies_Adapter(Context context, List<Movie_Class> movie_class_list) {
         this.context = context;
         this.movie_class_list = movie_class_list;
