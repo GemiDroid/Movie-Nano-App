@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class PosterFragment extends Fragment  {
     Configuration config;
 
     DBHelper.database data;
+
+    static int currentVisiblePosition;
 
 
     //  private PosterFragment poster_fragment;
@@ -117,12 +120,18 @@ public class PosterFragment extends Fragment  {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+
+        currentVisiblePosition = ((LinearLayoutManager)recycler.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+
         // Store View ...
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        (recycler.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+        currentVisiblePosition = 0;
 
     // Restore View ...
     }
