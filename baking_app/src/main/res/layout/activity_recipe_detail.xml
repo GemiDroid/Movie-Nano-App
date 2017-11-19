@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.orchtech.baking_app.ItemDetailActivity"
+    tools:context="com.orchtech.baking_app.ui.activities.RecipeDetailActivity"
     tools:ignore="MergeRootFrame">
 
     <android.support.design.widget.AppBarLayout
@@ -39,6 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

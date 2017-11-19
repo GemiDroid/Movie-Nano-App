@@ -10,7 +10,7 @@ import java.util.List;
  * Created by pc on 11/17/2017.
  */
 
-public class ReceipesModel implements Serializable {
+public class BakingModel implements Serializable {
 
 
     @SerializedName("id")

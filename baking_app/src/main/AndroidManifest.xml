@@ -10,8 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ItemListActivity"
-            android:label="@string/app_name"
+            android:name="com.orchtech.baking_app.ui.activities.BakingCardActivity"
+            android:label=
+                "@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,15 +20,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ItemDetailActivity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName=".ItemListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+
+
+
+        <receiver android:name="com.orchtech.baking_app.Baking">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.orchtech.baking_app.ItemListActivity" />
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_info" />
+        </receiver>
+
+        <activity android:name="com.orchtech.baking_app.ui.activities.ReceipeCardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name="com.orchtech.baking_app.ui.activities.RecipeDetailActivity"
+            android:parentActivityName="com.orchtech.baking_app.ui.activities.ReceipeCardActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.orchtech.baking_app.ui.activities.ReceipeCardActivity" />
         </activity>
+
     </application>
 
 </manifest>

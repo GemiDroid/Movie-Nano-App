@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.orchtech.baking_app.ItemListActivity">
+    tools:context="com.orchtech.baking_app.ui.activities.ReceipeCardActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"

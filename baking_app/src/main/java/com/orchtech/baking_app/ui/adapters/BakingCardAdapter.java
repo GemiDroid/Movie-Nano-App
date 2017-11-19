@@ -1,7 +1,7 @@
 package com.orchtech.baking_app.ui.adapters;
 
 import com.orchtech.baking_app.R;
-import com.orchtech.baking_app.models.ReceipesModel;
+import com.orchtech.baking_app.models.BakingModel;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,13 +14,13 @@ import java.util.List;
  * Created by ahmed yousef on 11/18/2017.
  */
 
-public class ReceipeCardAdapter extends RecyclerView.Adapter<ReceipeCardAdapter.ReceipeCardHolder> {
+public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.ReceipeCardHolder> {
 
-    List<ReceipesModel> receipesModelList;
-    ReceipesModel receipesModel;
+    List<BakingModel> receipesModelList;
+    BakingModel receipesModel;
     Context context;
 
-    public ReceipeCardAdapter(List<ReceipesModel> receipesModelList, Context context) {
+    public BakingCardAdapter(List<BakingModel> receipesModelList, Context context) {
         this.receipesModelList = receipesModelList;
         this.context = context;
     }
