@@ -1,7 +1,23 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.orchtech.baking_app"
@@ -9,11 +25,9 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -21,24 +35,53 @@ android {
         }
     }
 
+    lintOptions{
+
+        checkReleaseBuilds false
+        abortOnError false
+
+    }
+
+   dexOptions {
+        maxProcessCount 4 // this is the default value
+        javaMaxHeapSize "4g"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    // compile 'com.google.android.gms:play-services-ads:9.0.2'
+    // compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support:design:26.+'
     compile 'com.android.support:cardview-v7:26.+'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev178-1.22.0'
+    compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.exoplayer:exoplayer:r2.4.0'
+    compile 'com.google.android.exoplayer:exoplayer-core:r2.4.0'
+    compile 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
+    compile 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true
+    }
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
-
 }
+apply plugin: 'com.google.gms.google-services'
