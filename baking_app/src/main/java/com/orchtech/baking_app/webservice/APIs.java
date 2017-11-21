@@ -1,6 +1,9 @@
 package com.orchtech.baking_app.webservice;
 
 import com.orchtech.baking_app.models.BakingModel;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -12,6 +15,6 @@ public interface APIs {
 
 
     @GET("baking.json")
-    Call<BakingModel> GetBakings();
+    Call<List<BakingModel>> GetBakings();
 
 }
