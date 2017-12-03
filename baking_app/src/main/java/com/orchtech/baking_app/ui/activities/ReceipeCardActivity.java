@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
@@ -20,6 +21,8 @@ import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.dummy.DummyContent;
 
 import java.util.List;
+
+import io.fabric.sdk.android.services.common.SafeToast;
 
 /**
  * An activity representing a list of Items. This activity
@@ -36,6 +39,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    Bundle b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +50,14 @@ public class ReceipeCardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        FloatingActionButton fab =  findViewById(R.id.fab);
+       /* FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -62,6 +66,15 @@ public class ReceipeCardActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+try{
+        if(getIntent().getExtras().get("ingredientsList")!=null) {
+
+            for (int i = 0; i <getIntent().getExtras().getStringArrayList("ingredientsList").size(); i++) {
+
+                SafeToast.makeText(this, getIntent().getExtras().getParcelableArrayList("ingredientsList").get(i).toString() + "", Toast.LENGTH_LONG).show();
+            }
+       }}
+      catch (Exception e){}
 
         View recyclerView = findViewById(R.id.item_list);
         assert  recyclerView != null;
@@ -117,8 +130,10 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
+
+
             holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+      /*      holder.mContentView.setText(mValues.get(position).content);*/
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
@@ -131,12 +146,12 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             final TextView mIdView;
-            final TextView mContentView;
+          /*  final TextView mContentView;*/
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = (TextView) view.findViewById(R.id.txt_card_name);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mIdView = view.findViewById(R.id.txt_card_name);
+               /* mContentView = (TextView) view.findViewById(R.id.content);*/
             }
         }
     }

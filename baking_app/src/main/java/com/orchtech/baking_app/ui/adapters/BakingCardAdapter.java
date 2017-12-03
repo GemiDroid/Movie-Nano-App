@@ -2,6 +2,7 @@ package com.orchtech.baking_app.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,23 +35,25 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
     @Override
     public ReceipeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.receipe_card_model,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receipe_card_model, parent, false);
         return new ReceipeCardHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ReceipeCardHolder holder, int position) {
 
-        receipesModel=receipesModelList.get(position);
+        receipesModel = receipesModelList.get(position);
         holder.txt_card_name.setText(receipesModel.getName());
-        final String CardId=receipesModel.getId();
+        final String CardId = receipesModel.getId();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i=new Intent(context, ReceipeCardActivity.class);
-                i.putExtra("card_id",CardId);
+                Intent i = new Intent(context, ReceipeCardActivity.class);
+                i.putExtra("card_id", CardId);
+                i.putParcelableArrayListExtra("ingredientsList", receipesModel.getIngredientsModels());
+                i.putParcelableArrayListExtra("stepsList", receipesModel.getStepsModels());
                 context.startActivity(i);
 
             }
@@ -65,10 +69,11 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
     public class ReceipeCardHolder extends RecyclerView.ViewHolder {
 
         TextView txt_card_name;
+
         public ReceipeCardHolder(View itemView) {
             super(itemView);
 
-            txt_card_name=itemView.findViewById(R.id.txt_card_name);
+            txt_card_name = itemView.findViewById(R.id.txt_card_name);
         }
     }
 }

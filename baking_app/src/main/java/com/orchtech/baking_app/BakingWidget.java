@@ -8,7 +8,7 @@ import android.widget.RemoteViews;
 /**
  * Implementation of App Widget functionality.
  */
-public class Baking extends AppWidgetProvider {
+public class BakingWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {

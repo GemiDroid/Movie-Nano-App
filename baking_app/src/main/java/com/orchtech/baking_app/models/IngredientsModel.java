@@ -1,5 +1,8 @@
 package com.orchtech.baking_app.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +12,8 @@ import java.io.Serializable;
  * Created by pc on 11/17/2017.
  */
 
-public class IngredientsModel implements Serializable {
+public class IngredientsModel implements Serializable, Parcelable {
+
 
 
     @SerializedName("quantity")
@@ -50,4 +54,37 @@ public class IngredientsModel implements Serializable {
     public void setIngredient(String ingredient) {
         Ingredient = ingredient;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.Quantity);
+        dest.writeString(this.Measure);
+        dest.writeString(this.Ingredient);
+    }
+
+    public IngredientsModel() {
+    }
+
+    protected IngredientsModel(Parcel in) {
+        this.Quantity = in.readString();
+        this.Measure = in.readString();
+        this.Ingredient = in.readString();
+    }
+
+    public static final Parcelable.Creator<IngredientsModel> CREATOR = new Parcelable.Creator<IngredientsModel>() {
+        @Override
+        public IngredientsModel createFromParcel(Parcel source) {
+            return new IngredientsModel(source);
+        }
+
+        @Override
+        public IngredientsModel[] newArray(int size) {
+            return new IngredientsModel[size];
+        }
+    };
 }
