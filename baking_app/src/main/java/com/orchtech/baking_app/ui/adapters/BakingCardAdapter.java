@@ -2,7 +2,6 @@ package com.orchtech.baking_app.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.BakingModel;
+import com.orchtech.baking_app.models.IngredientsModel;
+import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
         receipesModel = receipesModelList.get(position);
         holder.txt_card_name.setText(receipesModel.getName());
         final String CardId = receipesModel.getId();
+        final ArrayList<StepsModel> StepsList = receipesModel.getStepsModels();
+        final ArrayList<IngredientsModel> IngredientsList = receipesModel.getIngredientsModels();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,8 +55,8 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
 
                 Intent i = new Intent(context, ReceipeCardActivity.class);
                 i.putExtra("card_id", CardId);
-                i.putParcelableArrayListExtra("ingredientsList", receipesModel.getIngredientsModels());
-                i.putParcelableArrayListExtra("stepsList", receipesModel.getStepsModels());
+                i.putParcelableArrayListExtra("ingredientsList", IngredientsList);
+                i.putParcelableArrayListExtra("stepsList", StepsList);
                 context.startActivity(i);
 
             }

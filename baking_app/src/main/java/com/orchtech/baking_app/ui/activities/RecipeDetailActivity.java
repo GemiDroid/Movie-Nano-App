@@ -1,13 +1,7 @@
 package com.orchtech.baking_app.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 
@@ -23,8 +17,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        Toolbar toolbar = findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+        /*Toolbar toolbar = findViewById(R.id.detail_toolbar);
+        setSupportActionBar(toolbar);*/
 
        /* FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,10 +30,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });*/
 
         // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
+      /*  ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        }*/
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -64,7 +58,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     getIntent().getStringExtra(RecipeDetailFragment.StepDesc));
 
             arguments.putParcelableArrayList(RecipeDetailFragment.IngredientList,
-                    getIntent().getParcelableArrayListExtra(RecipeDetailFragment.StepDesc));
+                    getIntent().getParcelableArrayListExtra(RecipeDetailFragment.IngredientList));
 
 
             RecipeDetailFragment fragment = new RecipeDetailFragment();
@@ -75,7 +69,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -90,5 +84,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

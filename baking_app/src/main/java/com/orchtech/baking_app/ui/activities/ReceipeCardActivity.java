@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.dummy.DummyContent;
+import com.orchtech.baking_app.models.IngredientsModel;
 import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 
@@ -39,7 +40,8 @@ public class ReceipeCardActivity extends AppCompatActivity {
     private boolean mTwoPane;
     Bundle b;
     Button btn_ingredients;
-    ArrayList<StepsModel> StepsList,IngredientsList;
+    ArrayList<StepsModel> StepsList;
+    ArrayList<IngredientsModel>IngredientsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +72,16 @@ public class ReceipeCardActivity extends AppCompatActivity {
         StepsList = new ArrayList<>();
         IngredientsList=new ArrayList<>();
         try {
-            if (getIntent().getExtras().get("ingredientsList") != null) {
-/*
+           /* if (getIntent().getExtras().get("ingredientsList") != null) {
+*//*
                 for (int i = 0; i < getIntent().getExtras().getStringArrayList("ingredientsList").size(); i++) {
 
                     SafeToast.makeText(this, getIntent().getExtras().getParcelableArrayList("ingredientsList").get(i).toString() + "", Toast.LENGTH_LONG).show();
-                }*/
-            }
+                }*//*
+            }*/
 
-            StepsList = getIntent().getParcelableArrayListExtra("stepsList");
-            IngredientsList=getIntent().getParcelableArrayListExtra("ingredientsList");
+            StepsList = getIntent().getParcelableArrayListExtra("stepsList");//stepsList
+            IngredientsList=getIntent().getParcelableArrayListExtra("ingredientsList");//ingredientsList
 
             Log.d("StepsSize", "onCreate: "+StepsList.size());
             Log.d("IngredientsSize", "onCreate: "+IngredientsList.size());
@@ -185,7 +187,6 @@ public class ReceipeCardActivity extends AppCompatActivity {
                     } else {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, RecipeDetailActivity.class);
-
                         intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID,StepId);
                         intent.putExtra(RecipeDetailFragment.StepVideoUrl,VideoUrl);
                         intent.putExtra(RecipeDetailFragment.StepDesc,StepDesc);
@@ -197,6 +198,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return mValues.size();
         }
 

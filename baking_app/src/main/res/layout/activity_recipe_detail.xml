@@ -7,14 +7,14 @@
     tools:context="com.orchtech.baking_app.ui.activities.RecipeDetailActivity"
     tools:ignore="MergeRootFrame">
 
-    <android.support.design.widget.AppBarLayout
+   <!-- <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
 
-        <android.support.design.widget.CollapsingToolbarLayout
+    <!--    <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,29 +23,30 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
-            <android.support.v7.widget.Toolbar
+           &lt;!&ndash; <android.support.v7.widget.Toolbar
                 android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />&ndash;&gt;
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>-->
 
-    </android.support.design.widget.AppBarLayout>
+    <!--</android.support.design.widget.AppBarLayout>-->
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/item_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+       />
 
        <!-- <fragment
             android:name="com.orchtech.baking_app.ui.fragments.RecipeDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>-->
 
-    </android.support.v4.widget.NestedScrollView>
+
 
 
 

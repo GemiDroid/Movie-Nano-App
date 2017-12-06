@@ -1,9 +1,7 @@
 package com.orchtech.baking_app.ui.fragments;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -86,11 +84,11 @@ public class RecipeDetailFragment extends Fragment {
             VideoUrl = getArguments().getString(StepVideoUrl);
             StepsDesc = getArguments().getString(StepDesc);
 
-            Activity activity = this.getActivity();
+           /* Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(StepsDesc);
-            }
+            }*/
         }
     }
 
@@ -110,49 +108,63 @@ public class RecipeDetailFragment extends Fragment {
 
         lin_ingredient = rootView.findViewById(R.id.lin_ingredient);
 
-        if (!getArguments().getParcelableArrayList("ingredient_list").equals("")) {
-
-            lin_ingredient.setVisibility(View.VISIBLE);
-            lin_steps.setVisibility(View.GONE);
-
-            ingredientsModelList = getArguments().getParcelableArrayList("ingredient_list");
-            rec_ingredients = rootView.findViewById(R.id.rec_ingredients);
-            linearLayoutManager = new LinearLayoutManager(getActivity());
-            rec_ingredients.setLayoutManager(linearLayoutManager);
-            ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
-            rec_ingredients.setAdapter(ingredientsAdapter);
-
-
-        }
-
-        lin_ingredient.setVisibility(View.GONE);
-        lin_steps.setVisibility(View.VISIBLE);
-
         exoPlayer = rootView.findViewById(R.id.exoPlayer);
         txt_desc = rootView.findViewById(R.id.txt_desc);
 
-        txt_desc.setText(StepsDesc);
+      try {
+          if (!getArguments().getParcelableArrayList("ingredient_list").equals("")) {
 
-        initializePlayer();
+              lin_ingredient.setVisibility(View.VISIBLE);
+              lin_steps.setVisibility(View.GONE);
+
+              ingredientsModelList = getArguments().getParcelableArrayList("ingredient_list");
+              rec_ingredients = rootView.findViewById(R.id.rec_ingredients);
+              linearLayoutManager = new LinearLayoutManager(getActivity());
+              rec_ingredients.setLayoutManager(linearLayoutManager);
+              ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
+              rec_ingredients.setAdapter(ingredientsAdapter);
+          }
+      }
+
+          catch (Exception e){
+
+              lin_ingredient.setVisibility(View.GONE);
+              lin_steps.setVisibility(View.VISIBLE);
+              txt_desc.setText(StepsDesc);
+
+              initializePlayer();
+          }
+
 
 
         return rootView;
     }
 
     private void initializePlayer() {
+
+
+
+       /* SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(getActivity().getApplicationContext()),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+        MediaSource mediaSource = buildMediaSource(uri);
+        player.prepare(mediaSource, true, false);
+        video_view.setPlayer(player);*/
+
         player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(getActivity()),
+                new DefaultRenderersFactory(getActivity().getApplicationContext()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
 
-        exoPlayer.setPlayer(player);
+      player.setPlayWhenReady(true);
 
-        player.setPlayWhenReady(true);
         //player.seekTo(currentWindow, playbackPosition);
 
 
         Uri uri = Uri.parse(VideoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
+
+        exoPlayer.setPlayer(player);
     }
 
     private MediaSource buildMediaSource(Uri uri) {

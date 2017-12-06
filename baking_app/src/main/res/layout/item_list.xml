@@ -1,28 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    tools:context="com.orchtech.baking_app.ui.activities.ReceipeCardActivity"
-    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_ingredients"
+    android:orientation="vertical"
+    tools:context="com.orchtech.baking_app.ui.activities.ReceipeCardActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        app:layoutManager="LinearLayoutManager"
-        android:id="@+id/item_list"
-        android:name="com.orchtech.baking_app.ItemListFragment"
-        android:layout_width="match_parent"
-        tools:listitem="@layout/receipe_card_model"
-        android:layout_height="wrap_content"/>
+        <android.support.v7.widget.CardView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_margin="@dimen/text_margin"
+                    android:paddingLeft="@dimen/cardview_default_radius"
+                    android:id="@+id/btn_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/white"
+                    android:gravity="left|center"
+                    android:text="Recipe Ingredients"
+                    android:textAllCaps="false"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/item_list"
+            android:name="com.orchtech.baking_app.ItemListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/receipe_card_model" />
+
+    </LinearLayout>
 
 </LinearLayout>

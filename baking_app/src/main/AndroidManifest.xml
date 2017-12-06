@@ -3,6 +3,7 @@
     package="com.orchtech.baking_app">
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
