@@ -7,25 +7,20 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.orchtech.baking_app.models.StepsModel;
-import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.dummy.DummyContent;
+import com.orchtech.baking_app.models.StepsModel;
+import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.fabric.sdk.android.services.common.SafeToast;
 
 /**
  * An activity representing a list of Items. This activity
@@ -43,7 +38,8 @@ public class ReceipeCardActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     Bundle b;
-    List<StepsModel> StepsList,IngredientsList;
+    Button btn_ingredients;
+    ArrayList<StepsModel> StepsList,IngredientsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,15 +81,39 @@ public class ReceipeCardActivity extends AppCompatActivity {
             StepsList = getIntent().getParcelableArrayListExtra("stepsList");
             IngredientsList=getIntent().getParcelableArrayListExtra("ingredientsList");
 
-            Log.d("StepsSize", "onCreate: 00"+StepsList.size());
-            Log.d("IngredientsSize", "onCreate: 00"+IngredientsList.size());
+            Log.d("StepsSize", "onCreate: "+StepsList.size());
+            Log.d("IngredientsSize", "onCreate: "+IngredientsList.size());
 
         } catch (Exception e) {
         }
 
         View recyclerView = findViewById(R.id.item_list);
+        btn_ingredients=findViewById(R.id.btn_ingredients);
+
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView,StepsList);
+
+        btn_ingredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mTwoPane) {
+                    Bundle arguments = new Bundle();
+                    arguments.putParcelableArrayList(RecipeDetailFragment.IngredientList,IngredientsList);
+                    RecipeDetailFragment fragment = new RecipeDetailFragment();
+                    fragment.setArguments(arguments);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.item_detail_container, fragment)
+                            .commit();
+                } else {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, RecipeDetailActivity.class);
+                    intent.putParcelableArrayListExtra(RecipeDetailFragment.IngredientList,IngredientsList);
+                    context.startActivity(intent);
+                }
+
+            }
+        });
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView,List<StepsModel> StepsList) {
@@ -148,6 +168,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
 
 
                     if (mTwoPane) {

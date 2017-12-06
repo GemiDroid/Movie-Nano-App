@@ -2,17 +2,14 @@ package com.orchtech.baking_app.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 import com.orchtech.baking_app.R;
+import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -65,6 +62,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
             arguments.putString(RecipeDetailFragment.StepDesc,
                     getIntent().getStringExtra(RecipeDetailFragment.StepDesc));
+
+            arguments.putParcelableArrayList(RecipeDetailFragment.IngredientList,
+                    getIntent().getParcelableArrayListExtra(RecipeDetailFragment.StepDesc));
+
 
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             fragment.setArguments(arguments);

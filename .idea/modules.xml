@@ -3,11 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Movie-Nano-App.iml" filepath="$PROJECT_DIR$/Movie-Nano-App.iml" />
+      <module fileurl="file://D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\Movie-Nano-App.iml" filepath="D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\Movie-Nano-App.iml" />
       <module fileurl="file://D:\Orchtech\Development\Movie-Nano-App\Movie_App Nano Final.iml" filepath="D:\Orchtech\Development\Movie-Nano-App\Movie_App Nano Final.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baking_app/baking_app.iml" filepath="$PROJECT_DIR$/baking_app/baking_app.iml" />
-      <module fileurl="file://D:\Orchtech\Development\Movie-Nano-App\baking_app\baking_app.iml" filepath="D:\Orchtech\Development\Movie-Nano-App\baking_app\baking_app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/movie_app/movie_app.iml" filepath="$PROJECT_DIR$/movie_app/movie_app.iml" />
-      <module fileurl="file://D:\Orchtech\Development\Movie-Nano-App\movie_app\movie_app.iml" filepath="D:\Orchtech\Development\Movie-Nano-App\movie_app\movie_app.iml" />
+      <module fileurl="file://D:/Orchtech/Development/Movie-Nano-App/baking_app/baking_app.iml" filepath="D:/Orchtech/Development/Movie-Nano-App/baking_app/baking_app.iml" />
+      <module fileurl="file://D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\baking_app\baking_app.iml" filepath="D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\baking_app\baking_app.iml" />
+      <module fileurl="file://D:/Orchtech/Development/Movie-Nano-App/movie_app/movie_app.iml" filepath="D:/Orchtech/Development/Movie-Nano-App/movie_app/movie_app.iml" />
+      <module fileurl="file://D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\movie_app\movie_app.iml" filepath="D:\My Apps\MovieNanoAppFinal\Movie-Nano-App\movie_app\movie_app.iml" />
     </modules>
   </component>
 </project>
