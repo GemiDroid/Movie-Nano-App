@@ -31,10 +31,9 @@
                 android:weightSum="7">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_weight="4"
-                    android:background="@drawable/example_appwidget_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/bg"
                     android:scaleType="centerInside"
                     app:layout_collapseMode="parallax" />
 

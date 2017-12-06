@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="?android:attr/textAppearanceLarge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,16 +8,33 @@
     android:textIsSelectable="true"
     tools:context="com.orchtech.baking_app.ui.fragments.RecipeDetailFragment">
 
-
+<LinearLayout
+    android:weightSum="3"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/exoPlayer"
         app:show_timeout="10000"
+        android:layout_weight="2"
         app:fastforward_increment="30000"
         app:rewind_increment="30000"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:surface_type="surface_view"
         app:use_controller="true" />
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="@string/add_widget"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_20sp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</LinearLayout>
 
 
 </LinearLayout>

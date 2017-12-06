@@ -29,14 +29,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+       /* FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -59,6 +59,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(RecipeDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(RecipeDetailFragment.ARG_ITEM_ID));
+
+            arguments.putString(RecipeDetailFragment.StepVideoUrl,
+                    getIntent().getStringExtra(RecipeDetailFragment.StepVideoUrl));
+
+            arguments.putString(RecipeDetailFragment.StepDesc,
+                    getIntent().getStringExtra(RecipeDetailFragment.StepDesc));
+
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

@@ -23,6 +23,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.dummy.DummyContent;
+import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 
@@ -37,15 +38,20 @@ public class RecipeDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_ITEM_ID = "step_id";
+    public static final String StepDesc = "step_desc";
+    public static final String StepVideoUrl = "step_video";
+
 
     SimpleExoPlayerView exoPlayer;
+    TextView txt_desc;
     SimpleExoPlayer player;
 
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private StepsModel mItem;
+    private String VideoUrl,StepsDesc;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,12 +68,13 @@ public class RecipeDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            VideoUrl=getArguments().getString(StepVideoUrl);
+            StepsDesc=getArguments().getString(StepDesc);
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle(StepsDesc);
             }
         }
     }
@@ -80,8 +87,14 @@ public class RecipeDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
          //   ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-            exoPlayer=rootView.findViewById(R.id.exoPlayer);
+
         }
+
+        exoPlayer=rootView.findViewById(R.id.exoPlayer);
+        txt_desc=rootView.findViewById(R.id.txt_desc);
+
+        txt_desc.setText(StepsDesc);
+
         initializePlayer();
 
 
