@@ -1,7 +1,9 @@
 package com.orchtech.baking_app.ui.fragments;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +48,8 @@ public class RecipeDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "step_id";
     public static final String StepDesc = "step_desc";
     public static final String StepVideoUrl = "step_video";
+    public static final String StepThumbnail = "step_thumb";
+
 
     public static final String IngredientList = "ingredient_list";
 
@@ -77,18 +81,27 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            VideoUrl = getArguments().getString(StepVideoUrl);
-            StepsDesc = getArguments().getString(StepDesc);
+        try {
+            if (getArguments().containsKey(ARG_ITEM_ID)) {
+                // Load the dummy content specified by the fragment
+                // arguments. In a real-world scenario, use a Loader
+                // to load content from a content provider.
 
-           /* Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(StepsDesc);
-            }*/
+                if (getArguments().getString(StepVideoUrl).equals("")) {
+                    VideoUrl = getArguments().getString(StepThumbnail);
+                } else {
+                    VideoUrl = getArguments().getString(StepVideoUrl);
+                }
+                StepsDesc = getArguments().getString(StepDesc);
+
+                Activity activity = this.getActivity();
+                CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
+                if (appBarLayout != null) {
+                    appBarLayout.setTitle(StepsDesc);
+                }
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -111,30 +124,27 @@ public class RecipeDetailFragment extends Fragment {
         exoPlayer = rootView.findViewById(R.id.exoPlayer);
         txt_desc = rootView.findViewById(R.id.txt_desc);
 
-      try {
-          if (!getArguments().getParcelableArrayList("ingredient_list").equals("")) {
+        try {
+            if (!getArguments().getParcelableArrayList("ingredient_list").equals("")) {
 
-              lin_ingredient.setVisibility(View.VISIBLE);
-              lin_steps.setVisibility(View.GONE);
+                lin_ingredient.setVisibility(View.VISIBLE);
+                lin_steps.setVisibility(View.GONE);
 
-              ingredientsModelList = getArguments().getParcelableArrayList("ingredient_list");
-              rec_ingredients = rootView.findViewById(R.id.rec_ingredients);
-              linearLayoutManager = new LinearLayoutManager(getActivity());
-              rec_ingredients.setLayoutManager(linearLayoutManager);
-              ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
-              rec_ingredients.setAdapter(ingredientsAdapter);
-          }
-      }
+                ingredientsModelList = getArguments().getParcelableArrayList("ingredient_list");
+                rec_ingredients = rootView.findViewById(R.id.rec_ingredients);
+                linearLayoutManager = new LinearLayoutManager(getActivity());
+                rec_ingredients.setLayoutManager(linearLayoutManager);
+                ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
+                rec_ingredients.setAdapter(ingredientsAdapter);
+            }
+        } catch (Exception e) {
 
-          catch (Exception e){
+            lin_ingredient.setVisibility(View.GONE);
+            lin_steps.setVisibility(View.VISIBLE);
+            txt_desc.setText(StepsDesc);
 
-              lin_ingredient.setVisibility(View.GONE);
-              lin_steps.setVisibility(View.VISIBLE);
-              txt_desc.setText(StepsDesc);
-
-              initializePlayer();
-          }
-
+            initializePlayer();
+        }
 
 
         return rootView;
@@ -155,7 +165,7 @@ public class RecipeDetailFragment extends Fragment {
                 new DefaultRenderersFactory(getActivity().getApplicationContext()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
 
-      player.setPlayWhenReady(true);
+        player.setPlayWhenReady(true);
 
         //player.seekTo(currentWindow, playbackPosition);
 
@@ -171,5 +181,23 @@ public class RecipeDetailFragment extends Fragment {
         return new ExtractorMediaSource(uri,
                 new DefaultHttpDataSourceFactory("ua"),
                 new DefaultExtractorsFactory(), null, null);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        releasePlayer();
+    }
+
+    private void releasePlayer() {
+
+        if (player != null) {
+           /* playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();*/
+            player.release();
+            player = null;
+        }
     }
 }

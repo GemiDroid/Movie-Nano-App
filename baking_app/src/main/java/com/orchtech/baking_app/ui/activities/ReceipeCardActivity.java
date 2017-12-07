@@ -3,8 +3,10 @@ package com.orchtech.baking_app.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -40,8 +42,10 @@ public class ReceipeCardActivity extends AppCompatActivity {
     private boolean mTwoPane;
     Bundle b;
     Button btn_ingredients;
-    ArrayList<StepsModel> StepsList;
-    ArrayList<IngredientsModel>IngredientsList;
+  static   ArrayList<StepsModel> StepsList;
+  static   ArrayList<IngredientsModel>IngredientsList;
+    RecyclerView recyclerView;
+    int currentVisiblePosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +93,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
 
-        View recyclerView = findViewById(R.id.item_list);
+         recyclerView = findViewById(R.id.item_list);
         btn_ingredients=findViewById(R.id.btn_ingredients);
 
         assert recyclerView != null;
@@ -118,7 +122,22 @@ public class ReceipeCardActivity extends AppCompatActivity {
         });
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView,List<StepsModel> StepsList) {
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        currentVisiblePosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        (recyclerView.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+        currentVisiblePosition = 0;
+    }
+
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<StepsModel> StepsList) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, StepsList, mTwoPane));
     }
 
@@ -161,6 +180,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
             final String StepId=stepObject.getId();
             final String VideoUrl=stepObject.getVideoUrl();
             final String StepDesc=stepObject.getDescription();
+            final String Thumb=stepObject.getThumbUrl();
       /*      holder.mContentView.setText(mValues.get(position).content);*/
 
             holder.itemView.setTag(mValues.get(position));
@@ -177,7 +197,10 @@ public class ReceipeCardActivity extends AppCompatActivity {
                         Bundle arguments = new Bundle();
                         arguments.putString(RecipeDetailFragment.ARG_ITEM_ID,StepId);
                         arguments.putString(RecipeDetailFragment.StepVideoUrl,VideoUrl);
+                        arguments.putString(RecipeDetailFragment.StepThumbnail,Thumb);
+
                         arguments.putString(RecipeDetailFragment.StepDesc,StepDesc);
+
 
                         RecipeDetailFragment fragment = new RecipeDetailFragment();
                         fragment.setArguments(arguments);
@@ -189,6 +212,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, RecipeDetailActivity.class);
                         intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID,StepId);
                         intent.putExtra(RecipeDetailFragment.StepVideoUrl,VideoUrl);
+                        intent.putExtra(RecipeDetailFragment.StepThumbnail,Thumb);
                         intent.putExtra(RecipeDetailFragment.StepDesc,StepDesc);
                         context.startActivity(intent);
                     }

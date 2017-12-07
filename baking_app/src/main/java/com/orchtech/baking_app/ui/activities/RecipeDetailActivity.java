@@ -1,7 +1,10 @@
 package com.orchtech.baking_app.ui.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
 
@@ -17,8 +20,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        /*Toolbar toolbar = findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);*/
+       android.support.v7.widget.Toolbar toolbar = findViewById(R.id.detail_toolbar);
+        setSupportActionBar(toolbar);
 
        /* FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -30,10 +33,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });*/
 
         // Show the Up button in the action bar.
-      /*  ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }*/
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -54,6 +58,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
             arguments.putString(RecipeDetailFragment.StepVideoUrl,
                     getIntent().getStringExtra(RecipeDetailFragment.StepVideoUrl));
 
+            arguments.putString(RecipeDetailFragment.StepThumbnail,
+                    getIntent().getStringExtra(RecipeDetailFragment.StepThumbnail));
+
             arguments.putString(RecipeDetailFragment.StepDesc,
                     getIntent().getStringExtra(RecipeDetailFragment.StepDesc));
 
@@ -69,9 +76,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+  @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+       /* int id = item.getItemId();
         if (id == android.R.id.home) {
             // This ID represents the Home or Up button. In the case of this
             // activity, the Up button is shown. Use NavUtils to allow users
@@ -82,7 +89,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
             //
             NavUtils.navigateUpTo(this, new Intent(this, ReceipeCardActivity.class));
             return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
+        }*/
+
+
+       onBackPressed();
+        return true;
+    }
 }
