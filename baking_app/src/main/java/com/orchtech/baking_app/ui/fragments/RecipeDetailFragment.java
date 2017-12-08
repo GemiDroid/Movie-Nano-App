@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -59,6 +61,7 @@ public class RecipeDetailFragment extends Fragment {
     SimpleExoPlayerView exoPlayer;
     TextView txt_desc;
     SimpleExoPlayer player;
+    ImageView step_img;
     IngredientsAdapter ingredientsAdapter;
     LinearLayout lin_steps, lin_ingredient;
     RecyclerView rec_ingredients;
@@ -68,7 +71,7 @@ public class RecipeDetailFragment extends Fragment {
      */
 
     private StepsModel mItem;
-    private String VideoUrl, StepsDesc;
+    private String VideoUrl,ImageUrl, StepsDesc;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -88,7 +91,7 @@ public class RecipeDetailFragment extends Fragment {
                 // to load content from a content provider.
 
                 if (getArguments().getString(StepVideoUrl).equals("")) {
-                    VideoUrl = getArguments().getString(StepThumbnail);
+                    ImageUrl = getArguments().getString(StepThumbnail);
                 } else {
                     VideoUrl = getArguments().getString(StepVideoUrl);
                 }
@@ -122,6 +125,7 @@ public class RecipeDetailFragment extends Fragment {
         lin_ingredient = rootView.findViewById(R.id.lin_ingredient);
 
         exoPlayer = rootView.findViewById(R.id.exoPlayer);
+        step_img=rootView.findViewById(R.id.step_img);
         txt_desc = rootView.findViewById(R.id.txt_desc);
 
         try {
@@ -143,7 +147,21 @@ public class RecipeDetailFragment extends Fragment {
             lin_steps.setVisibility(View.VISIBLE);
             txt_desc.setText(StepsDesc);
 
-            initializePlayer();
+            try{
+                if(VideoUrl.equals(null)||VideoUrl.equals("")){
+
+                    exoPlayer.setVisibility(View.GONE);
+                    step_img.setVisibility(View.VISIBLE);
+
+                    Glide.with(getActivity()).load(ImageUrl).into(step_img);
+                }
+
+            }
+            catch (Exception ee) {
+                step_img.setVisibility(View.GONE);
+                exoPlayer.setVisibility(View.VISIBLE);
+                initializePlayer();
+            }
         }
 
 
