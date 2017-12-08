@@ -71,7 +71,7 @@ public class RecipeDetailFragment extends Fragment {
      */
 
     private StepsModel mItem;
-    private String VideoUrl,ImageUrl, StepsDesc;
+    private String VideoUrl, StepsDesc;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -91,7 +91,7 @@ public class RecipeDetailFragment extends Fragment {
                 // to load content from a content provider.
 
                 if (getArguments().getString(StepVideoUrl).equals("")) {
-                    ImageUrl = getArguments().getString(StepThumbnail);
+                    VideoUrl = getArguments().getString(StepThumbnail);
                 } else {
                     VideoUrl = getArguments().getString(StepVideoUrl);
                 }
@@ -125,7 +125,7 @@ public class RecipeDetailFragment extends Fragment {
         lin_ingredient = rootView.findViewById(R.id.lin_ingredient);
 
         exoPlayer = rootView.findViewById(R.id.exoPlayer);
-        step_img=rootView.findViewById(R.id.step_img);
+       /* step_img=rootView.findViewById(R.id.step_img);*/
         txt_desc = rootView.findViewById(R.id.txt_desc);
 
         try {
@@ -147,7 +147,7 @@ public class RecipeDetailFragment extends Fragment {
             lin_steps.setVisibility(View.VISIBLE);
             txt_desc.setText(StepsDesc);
 
-            try{
+            /*try{
                 if(VideoUrl==null){
 
 
@@ -161,9 +161,11 @@ public class RecipeDetailFragment extends Fragment {
             }
             catch (Exception ee) {
                 step_img.setVisibility(View.GONE);
-                exoPlayer.setVisibility(View.VISIBLE);
+                exoPlayer.setVisibility(View.VISIBLE);*/
+
                 initializePlayer();
-            }
+
+            /*}*/
         }
 
 

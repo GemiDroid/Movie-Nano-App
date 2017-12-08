@@ -24,7 +24,7 @@
         </activity>
 
 
-        <receiver android:name="com.orchtech.baking_app.BakingWidget">
+        <receiver android:name="com.orchtech.baking_app.widget.BakingWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

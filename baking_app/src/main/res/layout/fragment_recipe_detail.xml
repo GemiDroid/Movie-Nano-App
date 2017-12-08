@@ -36,26 +36,26 @@
             android:weightSum="3">
 
 
-            <ImageView
+          <!--  <ImageView
                 android:visibility="gone"
                 android:id="@+id/step_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                />
+                />-->
 
 
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                 android:id="@+id/exoPlayer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="2"
                 app:use_controller="true" />
 
             <TextView
                 android:id="@+id/txt_desc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimary"

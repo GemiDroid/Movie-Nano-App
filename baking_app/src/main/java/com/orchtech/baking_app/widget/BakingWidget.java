@@ -1,13 +1,23 @@
-package com.orchtech.baking_app;
+package com.orchtech.baking_app.widget;/*
+package com.orchtech.baking_app.widget;
+
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.Context;
+import android.widget.RemoteViews;
+
+import com.orchtech.baking_app.R;
+
+*/
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+import com.orchtech.baking_app.R;
 
-/**
- * Implementation of App Widget functionality.
- */
+
 public class BakingWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -19,7 +29,12 @@ public class BakingWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+       // appWidgetManager.updateAppWidget(appWidgetId, views);
+
+
+        appWidgetManager = AppWidgetManager.getInstance(context);
+       /* int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_text); */
     }
 
     @Override
@@ -40,4 +55,5 @@ public class BakingWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 }
+
 

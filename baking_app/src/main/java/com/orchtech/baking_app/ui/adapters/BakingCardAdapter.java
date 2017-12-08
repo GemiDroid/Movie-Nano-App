@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.models.IngredientsModel;
@@ -45,6 +47,11 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
 
         receipesModel = receipesModelList.get(position);
         holder.txt_card_name.setText(receipesModel.getName());
+        if (receipesModel.getImage() != null) {
+            Glide.with(context).load(receipesModel.getImage()).into(holder.baking_img);
+        } else {
+
+        }
         final String CardId = receipesModel.getId();
         final ArrayList<StepsModel> StepsList = receipesModel.getStepsModels();
         final ArrayList<IngredientsModel> IngredientsList = receipesModel.getIngredientsModels();
@@ -72,11 +79,13 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
     public class ReceipeCardHolder extends RecyclerView.ViewHolder {
 
         TextView txt_card_name;
+        ImageView baking_img;
 
         public ReceipeCardHolder(View itemView) {
             super(itemView);
 
             txt_card_name = itemView.findViewById(R.id.txt_card_name);
+            baking_img = itemView.findViewById(R.id.baking_img);
         }
     }
 }
