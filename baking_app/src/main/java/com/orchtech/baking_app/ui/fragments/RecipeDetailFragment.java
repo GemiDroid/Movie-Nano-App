@@ -148,7 +148,9 @@ public class RecipeDetailFragment extends Fragment {
             txt_desc.setText(StepsDesc);
 
             try{
-                if(VideoUrl.equals(null)||VideoUrl.equals("")){
+                if(VideoUrl==null){
+
+
 
                     exoPlayer.setVisibility(View.GONE);
                     step_img.setVisibility(View.VISIBLE);
