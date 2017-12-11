@@ -3,6 +3,10 @@ package com.orchtech.baking_app.models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
 /**
  * Created by ahmed.yousef on 1/8/2017.
  */
@@ -27,5 +31,22 @@ public class Preferences {
         SharedPreferences preferences = context.getSharedPreferences("baking",Context.MODE_PRIVATE);
         return preferences.getString(key,"");
     }
+
+    public  static <T> void setList(Context context,String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        saveInPreference(context,key, json);
+    }
+
+  /*  public  static <T>List  GetList(Context context,String key) {
+        Gson gson = new Gson();
+      List<T> json = getFromPreference()
+
+
+
+        saveInPreference(context,key, json);
+    }*/
+
 
 }

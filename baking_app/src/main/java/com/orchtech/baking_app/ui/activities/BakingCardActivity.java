@@ -20,6 +20,7 @@ import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.models.Preferences;
 import com.orchtech.baking_app.ui.adapters.BakingCardAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +45,7 @@ public class BakingCardActivity extends AppCompatActivity {
     static int x;
     Configuration config;
     ProgressBar prog_baking;
+    List<BakingModel> bakingModelList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class BakingCardActivity extends AppCompatActivity {
 
         rec_baking_card.setLayoutManager(linearLayoutManager);
 
+
         GetBakingCards();
 
 
@@ -102,6 +105,8 @@ public class BakingCardActivity extends AppCompatActivity {
             bakingManager = new BakingManager();
         }
 
+        if(bakingModelList==null){bakingModelList=new ArrayList<>();}
+
         bakingManager.GetBakings().enqueue(new Callback<List<BakingModel>>() {
             @Override
             public void onResponse(Call<List<BakingModel>> call, Response<List<BakingModel>> response) {
@@ -112,9 +117,13 @@ public class BakingCardActivity extends AppCompatActivity {
                         // Empty List
                     } else {
 
-                        bakingCardAdapter = new BakingCardAdapter(response.body(), BakingCardActivity.this);
+                        bakingModelList=response.body();
+
+                        bakingCardAdapter = new BakingCardAdapter(bakingModelList, BakingCardActivity.this);
                         rec_baking_card.setAdapter(bakingCardAdapter);
                         bakingCardAdapter.notifyDataSetChanged();
+
+                      //  Preferences.setList(BakingCardActivity.this,"baking_list",bakingModelList);
 
                     }
                 } else {
