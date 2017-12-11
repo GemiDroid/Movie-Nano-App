@@ -3,6 +3,7 @@ package com.orchtech.baking_app.ui.fragments;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 import com.orchtech.baking_app.ui.adapters.IngredientsAdapter;
+import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 import java.util.ArrayList;
 
@@ -72,6 +74,8 @@ public class RecipeDetailFragment extends Fragment {
 
     private StepsModel mItem;
     private String VideoUrl, StepsDesc;
+    int currentVisiblePosition = 0;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -140,6 +144,9 @@ public class RecipeDetailFragment extends Fragment {
                 rec_ingredients.setLayoutManager(linearLayoutManager);
                 ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
                 rec_ingredients.setAdapter(ingredientsAdapter);
+
+                SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());
+
             }
         } catch (Exception e) {
 
@@ -163,13 +170,31 @@ public class RecipeDetailFragment extends Fragment {
                 step_img.setVisibility(View.GONE);
                 exoPlayer.setVisibility(View.VISIBLE);*/
 
-                initializePlayer();
+            initializePlayer();
 
             /*}*/
         }
 
 
         return rootView;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        (rec_ingredients.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+        currentVisiblePosition = 0;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        currentVisiblePosition = ((LinearLayoutManager) rec_ingredients.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+
     }
 
     private void initializePlayer() {

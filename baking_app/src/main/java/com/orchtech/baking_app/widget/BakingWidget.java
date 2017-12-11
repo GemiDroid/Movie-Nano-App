@@ -17,7 +17,7 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import com.orchtech.baking_app.R;
 
-
+@Deprecated
 public class BakingWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -26,7 +26,7 @@ public class BakingWidget extends AppWidgetProvider {
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.appwidget_list, widgetText);
 
         // Instruct the widget manager to update the widget
        // appWidgetManager.updateAppWidget(appWidgetId, views);
