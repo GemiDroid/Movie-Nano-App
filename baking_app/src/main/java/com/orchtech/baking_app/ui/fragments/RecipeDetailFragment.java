@@ -258,6 +258,8 @@ public class RecipeDetailFragment extends Fragment {
                 currentVisiblePosition = ((LinearLayoutManager) rec_ingredients.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
             }
         }catch (Exception e){}
+
+
     }
 
     private void initializePlayer() {
