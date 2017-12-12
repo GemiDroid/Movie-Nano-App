@@ -11,7 +11,6 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.models.IngredientsModel;
-import java.util.List;
 
 
 
@@ -114,7 +113,7 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
 
-        Log.e("size=", baking_object.getIngredientsModels().size() + "");
+        Log.e("data_size=", baking_object.getIngredientsModels().size() + "");
 
         return baking_object.getIngredientsModels().size();
 

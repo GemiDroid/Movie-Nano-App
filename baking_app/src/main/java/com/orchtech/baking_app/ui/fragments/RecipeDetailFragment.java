@@ -1,18 +1,11 @@
 package com.orchtech.baking_app.ui.fragments;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -40,7 +31,6 @@ import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 import com.orchtech.baking_app.ui.adapters.IngredientsAdapter;
-import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 import java.util.ArrayList;
 
@@ -172,7 +162,7 @@ public class RecipeDetailFragment extends Fragment {
                 ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
                 rec_ingredients.setAdapter(ingredientsAdapter);
 
-                SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());
+              /*  SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());*/
 
             }
         } catch (Exception e) {

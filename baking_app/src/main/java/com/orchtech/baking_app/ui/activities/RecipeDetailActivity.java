@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
+import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -74,6 +75,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
+
+
+        SimpleAppWidgetProvider.sendRefreshBroadcast(this);
     }
 
   @Override

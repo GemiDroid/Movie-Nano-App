@@ -9,8 +9,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.orchtech.baking_app.R;
-import com.orchtech.baking_app.ui.activities.BakingCardActivity;
+import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 
 
 /**
@@ -92,7 +93,7 @@ public class SimpleAppWidgetProvider extends AppWidgetProvider {
 
             // Trigger listview item click
 
-            Intent startActivityIntent = new Intent(context, BakingCardActivity.class);
+            Intent startActivityIntent = new Intent(context, RecipeDetailActivity.class);
 
             PendingIntent startActivityPendingIntent = PendingIntent.getActivity(context, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
