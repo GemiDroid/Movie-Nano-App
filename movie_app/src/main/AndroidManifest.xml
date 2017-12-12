@@ -30,7 +30,6 @@
         </receiver>
 
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Movie_Details"
             android:label="@string/about_movie">
            <!-- <intent-filter>

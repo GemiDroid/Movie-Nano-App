@@ -3,16 +3,13 @@ package com.orchtech.baking_app.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.orchtech.baking_app.R;
-import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.models.IngredientsModel;
 
-
+import java.util.ArrayList;
 
 
 /**
@@ -22,7 +19,7 @@ import com.orchtech.baking_app.models.IngredientsModel;
 public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 
 
-    private Context mContext;
+   /* private Context mContext;
 
 //            private ArrayList<String> records;
 
@@ -162,5 +159,92 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
         return null;
 
     }
+*/
+
+
+
+
+    private ArrayList<IngredientsModel> listItemList = new ArrayList();
+    private Context context = null;
+    private int appWidgetId;
+
+    public ListViewRemoteViewsFactory(Context context, Intent intent) {
+        this.context = context;
+        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+
+        listItemList=intent.getParcelableArrayListExtra("");
+
+        populateListItem();
+    }
+
+    private void populateListItem() {
+        for (int i = 0; i < 15; i++) {
+            IngredientsModel listItem = new IngredientsModel();
+            listItem.setIngredient("");
+            listItem.setMeasure("");
+            listItem.setQuantity("");
+            listItemList.add(listItem);
+        }
+
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public void onDataSetChanged() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public int getCount() {
+        return listItemList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    /*
+    *Similar to getView of Adapter where instead of View
+    *we return RemoteViews
+    *
+    */
+    @Override
+    public RemoteViews getViewAt(int position) {
+        final RemoteViews remoteView = new RemoteViews(
+                context.getPackageName(), R.layout.recipe_ingredient_widget_list_item);
+        IngredientsModel listItem = listItemList.get(position);
+        remoteView.setTextViewText(R.id.ingredient_tv, listItem.getIngredient());
+        remoteView.setTextViewText(R.id.measure_tv, listItem.getMeasure());
+        remoteView.setTextViewText(R.id.quantity_tv, listItem.getQuantity());
+
+        return remoteView;
+    }
+
+    @Override
+    public RemoteViews getLoadingView() {
+        return null;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+
 
 }

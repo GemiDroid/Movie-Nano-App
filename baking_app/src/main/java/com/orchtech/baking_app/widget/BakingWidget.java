@@ -17,7 +17,6 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import com.orchtech.baking_app.R;
 
-@Deprecated
 public class BakingWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,

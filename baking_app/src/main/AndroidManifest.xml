@@ -35,6 +35,22 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_info" />
+
+
+
+<!--
+            <receiver android:name=".WidgetProvider" >
+                <intent-filter>
+
+                    &lt;!&ndash; This widget provider receives broadcast with following action
+        name or simply onUpdate of AppWidgetProvider is called &ndash;&gt;
+                    <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                </intent-filter>
+                &lt;!&ndash; linking up xml file of appwidget-provider to AppWidgetProvider &ndash;&gt;
+                <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/widgetinfo" />
+            </receiver>-->
         </receiver>
 
         <service android:name=".widget.ListViewRemoveViewsService"

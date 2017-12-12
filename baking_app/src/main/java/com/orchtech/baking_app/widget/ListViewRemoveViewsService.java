@@ -10,7 +10,7 @@ import android.widget.RemoteViewsService;
 
 public class ListViewRemoveViewsService extends RemoteViewsService {
 
-    public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
+    /*public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
 
         int appWidgetId = intent.getIntExtra(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -18,6 +18,17 @@ public class ListViewRemoveViewsService extends RemoteViewsService {
 
         return new ListViewRemoteViewsFactory(this.getApplicationContext(), intent);
 
+    }*/
+
+
+    @Override
+    public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
+
+        int appWidgetId = intent.getIntExtra(
+                AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+
+        return (new ListViewRemoteViewsFactory(this.getApplicationContext(), intent));
     }
 
 }
