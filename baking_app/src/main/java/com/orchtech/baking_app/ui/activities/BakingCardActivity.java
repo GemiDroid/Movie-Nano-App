@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.manager.BakingManager;
 import com.orchtech.baking_app.models.BakingModel;
+import com.orchtech.baking_app.models.IngredientsModel;
 import com.orchtech.baking_app.models.Preferences;
 import com.orchtech.baking_app.ui.adapters.BakingCardAdapter;
 
@@ -35,6 +36,7 @@ import retrofit2.Response;
 public class BakingCardActivity extends AppCompatActivity {
 
     public static BakingModel bakingModel = null;
+    public static  ArrayList<IngredientsModel> ingerdientList =null;
     static int x;
     RecyclerView rec_baking_card;
     LinearLayoutManager linearLayoutManager;
@@ -121,7 +123,7 @@ public class BakingCardActivity extends AppCompatActivity {
                     } else {
                         if (bakingModel == null)
                             if (response.body().size() > 0)
-                                bakingModel = response.body().get(0);
+                                ingerdientList = response.body().get(0).getIngredientsModels();
                         bakingModelList = response.body();
 
                         bakingCardAdapter = new BakingCardAdapter(bakingModelList, BakingCardActivity.this);

@@ -164,6 +164,8 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
   /*  private ArrayList<IngredientsModel> listItemList = new ArrayList();*/
 
       /*BakingCardActivity.BakingModel*/
+
+
     private Context context = null;
     private int appWidgetId;
 
@@ -172,14 +174,20 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
+
+
 //        listItemList = intent.getParcelableArrayListExtra("");
 
-//        populateListItem();
+      //  BakingCardActivity.bakingModel=new BakingModel();
+
+      // populateListItem();
     }
 
     private void populateListItem() {
         for (int i = 0; i < 15; i++) {
             IngredientsModel listItem = new IngredientsModel();
+
+
             listItem.setIngredient("");
             listItem.setMeasure("");
             listItem.setQuantity("");
@@ -207,7 +215,7 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
 //        return listItemList.size();
-        return BakingCardActivity.bakingModel.getIngredientsModels().size();
+        return BakingCardActivity.ingerdientList.size();
     }
 
 
@@ -231,7 +239,7 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
         final RemoteViews remoteView = new RemoteViews(
                 context.getPackageName(), R.layout.recipe_ingredient_widget_list_item);
 //        IngredientsModel listItem = listItemList.get(position);
-        IngredientsModel listItem = BakingCardActivity.bakingModel.getIngredientsModels().get(position);
+        IngredientsModel listItem = BakingCardActivity.ingerdientList.get(position);
         remoteView.setTextViewText(R.id.ingredient_tv, "Ingredient: "+listItem.getIngredient());
         remoteView.setTextViewText(R.id.measure_tv, "Measure: "+listItem.getMeasure());
         remoteView.setTextViewText(R.id.quantity_tv, "Quantity: "+listItem.getQuantity());

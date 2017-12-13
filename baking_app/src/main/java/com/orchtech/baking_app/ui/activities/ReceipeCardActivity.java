@@ -23,6 +23,7 @@ import com.orchtech.baking_app.dummy.DummyContent;
 import com.orchtech.baking_app.models.IngredientsModel;
 import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
+import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,8 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
             StepsList = getIntent().getParcelableArrayListExtra("stepsList");//stepsList
             IngredientsList=getIntent().getParcelableArrayListExtra("ingredientsList");//ingredientsList
+            BakingCardActivity.ingerdientList = IngredientsList;
+            SimpleAppWidgetProvider.sendRefreshBroadcast(this);
 
             Log.d("StepsSize", "onCreate: "+StepsList.size());
             Log.d("IngredientsSize", "onCreate: "+IngredientsList.size());

@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.orchtech.baking_app.R;
@@ -24,8 +25,8 @@ public class SimpleAppWidgetProvider extends AppWidgetProvider {
         context.sendBroadcast(intent);
     }
 
-  /* public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
-    public static final String EXTRA_ITEM = "com.example.edockh.EXTRA_ITEM";
+  public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
+  /*  public static final String EXTRA_ITEM = "com.example.edockh.EXTRA_ITEM";
 
     public SimpleAppWidgetProvider() {
         super();
@@ -171,4 +172,25 @@ public class SimpleAppWidgetProvider extends AppWidgetProvider {
         remoteViews.setEmptyView(R.id.appwidget_list, R.id.empty_view);
         return remoteViews;
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+
+        if (intent.getAction().equals(UPDATE_MEETING_ACTION)) {
+
+            int appWidgetIds[] = mgr.getAppWidgetIds(new ComponentName(context, SimpleAppWidgetProvider.class));
+
+            Log.e("received", intent.getAction());
+
+            mgr.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
+
+
+        }
+
+        super.onReceive(context, intent);
+
+    }
+
 }

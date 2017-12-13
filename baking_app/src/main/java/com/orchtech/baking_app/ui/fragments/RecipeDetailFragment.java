@@ -165,7 +165,6 @@ public class RecipeDetailFragment extends Fragment {
                 ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
                 rec_ingredients.setAdapter(ingredientsAdapter);
 
-               SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());
 
             }
         } catch (Exception e) {
