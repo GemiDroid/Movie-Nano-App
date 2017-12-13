@@ -34,6 +34,8 @@ import retrofit2.Response;
 
 public class BakingCardActivity extends AppCompatActivity {
 
+    public static BakingModel bakingModel = null;
+    static int x;
     RecyclerView rec_baking_card;
     LinearLayoutManager linearLayoutManager;
     AppBarLayout MyAppbar;
@@ -42,7 +44,6 @@ public class BakingCardActivity extends AppCompatActivity {
     int currentVisiblePosition = 0;
     BakingCardAdapter bakingCardAdapter;
     BakingManager bakingManager;
-    static int x;
     Configuration config;
     ProgressBar prog_baking;
     List<BakingModel> bakingModelList;
@@ -76,7 +77,7 @@ public class BakingCardActivity extends AppCompatActivity {
 
         rec_baking_card = findViewById(R.id.rec_baking_card);
 
-        prog_baking=findViewById(R.id.prog_baking);
+        prog_baking = findViewById(R.id.prog_baking);
 
        /* if (config.orientation == Configuration.ORIENTATION_LANDSCAPE &&  config.smallestScreenWidthDp < 600)  {
            x=3;
@@ -105,7 +106,9 @@ public class BakingCardActivity extends AppCompatActivity {
             bakingManager = new BakingManager();
         }
 
-        if(bakingModelList==null){bakingModelList=new ArrayList<>();}
+        if (bakingModelList == null) {
+            bakingModelList = new ArrayList<>();
+        }
 
         bakingManager.GetBakings().enqueue(new Callback<List<BakingModel>>() {
             @Override
@@ -116,14 +119,16 @@ public class BakingCardActivity extends AppCompatActivity {
                     if (response.body() == null) {
                         // Empty List
                     } else {
-
-                        bakingModelList=response.body();
+                        if (bakingModel == null)
+                            if (response.body().size() > 0)
+                                bakingModel = response.body().get(0);
+                        bakingModelList = response.body();
 
                         bakingCardAdapter = new BakingCardAdapter(bakingModelList, BakingCardActivity.this);
                         rec_baking_card.setAdapter(bakingCardAdapter);
                         bakingCardAdapter.notifyDataSetChanged();
 
-                      //  Preferences.setList(BakingCardActivity.this,"baking_list",bakingModelList);
+                        //  Preferences.setList(BakingCardActivity.this,"baking_list",bakingModelList);
 
                     }
                 } else {

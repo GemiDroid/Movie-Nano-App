@@ -14,6 +14,7 @@ import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.BakingModel;
 import com.orchtech.baking_app.models.IngredientsModel;
 import com.orchtech.baking_app.models.StepsModel;
+import com.orchtech.baking_app.ui.activities.BakingCardActivity;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                BakingCardActivity.bakingModel = receipesModel;
                 Intent i = new Intent(context, ReceipeCardActivity.class);
                 i.putExtra("card_id", CardId);
                 i.putParcelableArrayListExtra("ingredientsList", IngredientsList);

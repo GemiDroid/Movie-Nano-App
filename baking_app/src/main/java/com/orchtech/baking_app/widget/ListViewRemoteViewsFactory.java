@@ -8,8 +8,7 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.models.IngredientsModel;
-
-import java.util.ArrayList;
+import com.orchtech.baking_app.ui.activities.BakingCardActivity;
 
 
 /**
@@ -162,9 +161,9 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 */
 
 
+  /*  private ArrayList<IngredientsModel> listItemList = new ArrayList();*/
 
-
-    private ArrayList<IngredientsModel> listItemList = new ArrayList();
+      /*BakingCardActivity.BakingModel*/
     private Context context = null;
     private int appWidgetId;
 
@@ -173,9 +172,9 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
-        listItemList=intent.getParcelableArrayListExtra("");
+//        listItemList = intent.getParcelableArrayListExtra("");
 
-        populateListItem();
+//        populateListItem();
     }
 
     private void populateListItem() {
@@ -184,7 +183,7 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
             listItem.setIngredient("");
             listItem.setMeasure("");
             listItem.setQuantity("");
-            listItemList.add(listItem);
+           /* listItemList.add(listItem);*/
         }
 
     }
@@ -206,8 +205,10 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return listItemList.size();
+//        return listItemList.size();
+        return BakingCardActivity.bakingModel.getIngredientsModels().size();
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -228,10 +229,11 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteView = new RemoteViews(
                 context.getPackageName(), R.layout.recipe_ingredient_widget_list_item);
-        IngredientsModel listItem = listItemList.get(position);
-        remoteView.setTextViewText(R.id.ingredient_tv, listItem.getIngredient());
-        remoteView.setTextViewText(R.id.measure_tv, listItem.getMeasure());
-        remoteView.setTextViewText(R.id.quantity_tv, listItem.getQuantity());
+//        IngredientsModel listItem = listItemList.get(position);
+        IngredientsModel listItem = BakingCardActivity.bakingModel.getIngredientsModels().get(position);
+        remoteView.setTextViewText(R.id.ingredient_tv, "Ingredient: "+listItem.getIngredient());
+        remoteView.setTextViewText(R.id.measure_tv, "Measure: "+listItem.getMeasure());
+        remoteView.setTextViewText(R.id.quantity_tv, "Quantity: "+listItem.getQuantity());
 
         return remoteView;
     }
