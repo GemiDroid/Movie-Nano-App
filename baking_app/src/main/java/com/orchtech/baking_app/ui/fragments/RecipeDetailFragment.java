@@ -54,10 +54,8 @@ public class RecipeDetailFragment extends Fragment {
 
 
     public static final String IngredientList = "ingredient_list";
-
-
-    static long CURRENT_POSITION;
     static boolean isPlaying;
+    static long CURRENT_POSITION;
     ArrayList<IngredientsModel> ingredientsModelList;
     SimpleExoPlayerView exoPlayer;
     TextView txt_desc;
@@ -103,7 +101,10 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
+
+     /*   CURRENT_POSITION = 0;*/
 
         try {
             if (getArguments().containsKey(ARG_ITEM_ID)) {
@@ -131,7 +132,10 @@ public class RecipeDetailFragment extends Fragment {
         }
 
         OrientationMode = getActivity().getResources().getConfiguration().orientation;
+
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -220,8 +224,8 @@ public class RecipeDetailFragment extends Fragment {
                 player.seekTo(CURRENT_POSITION);
             try {
                 player.setPlayWhenReady(isPlaying);
+            } catch (Exception e) {
             }
-            catch (Exception e){}
 //            player.stop();
 
         }
@@ -332,6 +336,8 @@ public class RecipeDetailFragment extends Fragment {
 
         releasePlayer();
 
+      /*  CURRENT_POSITION = 0;*/
+
         //  getActivity().getApplicationContext().unregisterReceiver(receiver);
 
         //  LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
@@ -340,13 +346,21 @@ public class RecipeDetailFragment extends Fragment {
 
     }
 
+
+
+   /*  @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CURRENT_POSITION=0;
+    }*/
+
     private void releasePlayer() {
 
         if (player != null) {
            /* playbackPosition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
             playWhenReady = player.getPlayWhenReady();*/
-            CURRENT_POSITION=0;
+            /*CURRENT_POSITION=0;*/
             player.release();
             player = null;
         }

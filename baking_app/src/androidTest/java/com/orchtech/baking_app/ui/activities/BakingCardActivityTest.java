@@ -18,9 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.*;
-import static android.support.test.espresso.assertion.ViewAssertions.*;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
@@ -35,11 +35,17 @@ public class BakingCardActivityTest {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+       /* ViewInteraction frameLayout = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.rec_baking_card),
+                                childAtPosition(
+                                        withId(R.id.coordinator),
+                                        0)),
+                        0),
+                        isDisplayed()));*/
+
+
+
 
         ViewInteraction linearLayout = onView(
                 allOf(childAtPosition(
@@ -48,7 +54,16 @@ public class BakingCardActivityTest {
                                 1),
                         0),
                         isDisplayed()));
+
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         linearLayout.check(doesNotExist());
+
 
         ViewInteraction linearLayout2 = onView(
                 allOf(childAtPosition(
@@ -57,6 +72,13 @@ public class BakingCardActivityTest {
                                 1),
                         0),
                         isDisplayed()));
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         linearLayout2.check(matches(isDisplayed()));
 
     }
