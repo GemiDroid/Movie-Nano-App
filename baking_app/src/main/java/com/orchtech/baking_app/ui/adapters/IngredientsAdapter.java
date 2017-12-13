@@ -41,6 +41,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         ingredientsModel = ingredientsModelList.get(position);
         holder.txt_card_name.setText("Quantity: "+ingredientsModel.getQuantity()+"\n" +
                 "Measure: "+ ingredientsModel.getMeasure()+"\n"+"Ingredient: "+ ingredientsModel.getIngredient());
+
+
+
        /* final String CardId = ingredientsModel.getId();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +74,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             super(itemView);
 
             txt_card_name = itemView.findViewById(R.id.txt_card_name);
+
         }
     }
 }

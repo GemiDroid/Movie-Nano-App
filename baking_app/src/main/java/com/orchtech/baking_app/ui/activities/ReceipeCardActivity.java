@@ -3,6 +3,7 @@ package com.orchtech.baking_app.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -38,24 +39,26 @@ import java.util.List;
  */
 public class ReceipeCardActivity extends AppCompatActivity {
 
+    static ArrayList<StepsModel> StepsList;
+    static ArrayList<IngredientsModel> IngredientsList;
+    Bundle b;
+    Button btn_ingredients;
+    RecyclerView recyclerView;
+    int currentVisiblePosition = 0;
+    LinearLayoutManager linearLayoutManager;
+    Parcelable mListState;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-    Bundle b;
-    Button btn_ingredients;
-  static   ArrayList<StepsModel> StepsList;
-  static   ArrayList<IngredientsModel>IngredientsList;
-    RecyclerView recyclerView;
-    int currentVisiblePosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipe_card_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
@@ -71,12 +74,12 @@ public class ReceipeCardActivity extends AppCompatActivity {
         });*/
 
 
-
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
+
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -87,7 +90,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
         }
 
         StepsList = new ArrayList<>();
-        IngredientsList=new ArrayList<>();
+        IngredientsList = new ArrayList<>();
         try {
            /* if (getIntent().getExtras().get("ingredientsList") != null) {
 *//*
@@ -98,29 +101,41 @@ public class ReceipeCardActivity extends AppCompatActivity {
             }*/
 
             StepsList = getIntent().getParcelableArrayListExtra("stepsList");//stepsList
-            IngredientsList=getIntent().getParcelableArrayListExtra("ingredientsList");//ingredientsList
+            IngredientsList = getIntent().getParcelableArrayListExtra("ingredientsList");//ingredientsList
             BakingCardActivity.ingerdientList = IngredientsList;
             SimpleAppWidgetProvider.sendRefreshBroadcast(this);
 
-            Log.d("StepsSize", "onCreate: "+StepsList.size());
-            Log.d("IngredientsSize", "onCreate: "+IngredientsList.size());
+            Log.d("StepsSize", "onCreate: " + StepsList.size());
+            Log.d("IngredientsSize", "onCreate: " + IngredientsList.size());
 
         } catch (Exception e) {
         }
 
-         recyclerView = findViewById(R.id.item_list);
-        btn_ingredients=findViewById(R.id.btn_ingredients);
+        recyclerView = findViewById(R.id.item_list);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        btn_ingredients = findViewById(R.id.btn_ingredients);
 
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView,StepsList);
+        setupRecyclerView((RecyclerView) recyclerView, StepsList);
+
+        actionBar.setTitle(getIntent().getStringExtra("baking_name"));
+
 
         btn_ingredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                 if (mTwoPane) {
+
+
                     Bundle arguments = new Bundle();
-                    arguments.putParcelableArrayList(RecipeDetailFragment.IngredientList,IngredientsList);
+
+
+                    arguments.putParcelableArrayList(RecipeDetailFragment.IngredientList, IngredientsList);
+                    arguments.putString("baking_name",getIntent().getStringExtra("baking_name"));
                     RecipeDetailFragment fragment = new RecipeDetailFragment();
                     fragment.setArguments(arguments);
                     getSupportFragmentManager().beginTransaction()
@@ -129,7 +144,8 @@ public class ReceipeCardActivity extends AppCompatActivity {
                 } else {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, RecipeDetailActivity.class);
-                    intent.putParcelableArrayListExtra(RecipeDetailFragment.IngredientList,IngredientsList);
+                    intent.putParcelableArrayListExtra(RecipeDetailFragment.IngredientList, IngredientsList);
+                    intent.putExtra("baking_name",getIntent().getStringExtra("baking_name"));
                     context.startActivity(intent);
                 }
 
@@ -141,19 +157,48 @@ public class ReceipeCardActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
 
-        currentVisiblePosition = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        mListState = linearLayoutManager.onSaveInstanceState();
+        outState.putParcelable("list_pos", mListState);
+
+      /*  currentVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+        Log.d("CurrentBefore", "onSaveInstanceState: "+ currentVisiblePosition);*/
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        (recyclerView.getLayoutManager()).scrollToPosition(currentVisiblePosition);
-        currentVisiblePosition = 0;
+        if(savedInstanceState != null)
+            mListState = savedInstanceState.getParcelable("list_pos");
+
+      /*  Log.d("CurrentAfter", "onSaveInstanceState: "+ currentVisiblePosition);
+        (recyclerView.getLayoutManager()).scrollToPosition(currentVisiblePosition);*/
+      //  currentVisiblePosition = 0;
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<StepsModel> StepsList) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, StepsList, mTwoPane));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       /* int id = item.getItemId();
+        if (id == android.R.id.home) {
+            // This ID represents the Home or Up button. In the case of this
+            // activity, the Up button is shown. Use NavUtils to allow users
+            // to navigate up one level in the application structure. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            NavUtils.navigateUpTo(this, new Intent(this, ReceipeCardActivity.class));
+            return true;
+        }*/
+
+
+        onBackPressed();
+        return true;
     }
 
     public static class SimpleItemRecyclerViewAdapter
@@ -161,7 +206,6 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
         private final ReceipeCardActivity mParentActivity;
         private final List<StepsModel> mValues;
-        StepsModel stepObject;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
@@ -170,6 +214,7 @@ public class ReceipeCardActivity extends AppCompatActivity {
 
             }
         };
+        StepsModel stepObject;
 
         SimpleItemRecyclerViewAdapter(ReceipeCardActivity parent,
                                       List<StepsModel> items,
@@ -190,16 +235,15 @@ public class ReceipeCardActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
 
-            stepObject=  mValues.get(position);
+            stepObject = mValues.get(position);
             holder.txt_steps.setText(stepObject.getShortDesc());
-            final String StepId=stepObject.getId();
-            final String VideoUrl=stepObject.getVideoUrl();
-            final String StepDesc=stepObject.getDescription();
-            final String Thumb=stepObject.getThumbUrl();
+            final String StepId = stepObject.getId();
+            final String VideoUrl = stepObject.getVideoUrl();
+            final String StepDesc = stepObject.getDescription();
+            final String Thumb = stepObject.getThumbUrl();
       /*      holder.mContentView.setText(mValues.get(position).content);*/
 
             holder.itemView.setTag(mValues.get(position));
-
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -207,14 +251,13 @@ public class ReceipeCardActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
 
-
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(RecipeDetailFragment.ARG_ITEM_ID,StepId);
-                        arguments.putString(RecipeDetailFragment.StepVideoUrl,VideoUrl);
-                        arguments.putString(RecipeDetailFragment.StepThumbnail,Thumb);
+                        arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, StepId);
+                        arguments.putString(RecipeDetailFragment.StepVideoUrl, VideoUrl);
+                        arguments.putString(RecipeDetailFragment.StepThumbnail, Thumb);
 
-                        arguments.putString(RecipeDetailFragment.StepDesc,StepDesc);
+                        arguments.putString(RecipeDetailFragment.StepDesc, StepDesc);
 
 
                         RecipeDetailFragment fragment = new RecipeDetailFragment();
@@ -225,10 +268,10 @@ public class ReceipeCardActivity extends AppCompatActivity {
                     } else {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, RecipeDetailActivity.class);
-                        intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID,StepId);
-                        intent.putExtra(RecipeDetailFragment.StepVideoUrl,VideoUrl);
-                        intent.putExtra(RecipeDetailFragment.StepThumbnail,Thumb);
-                        intent.putExtra(RecipeDetailFragment.StepDesc,StepDesc);
+                        intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, StepId);
+                        intent.putExtra(RecipeDetailFragment.StepVideoUrl, VideoUrl);
+                        intent.putExtra(RecipeDetailFragment.StepThumbnail, Thumb);
+                        intent.putExtra(RecipeDetailFragment.StepDesc, StepDesc);
                         context.startActivity(intent);
                     }
                 }
@@ -251,26 +294,5 @@ public class ReceipeCardActivity extends AppCompatActivity {
                /* mContentView = (TextView) view.findViewById(R.id.content);*/
             }
         }
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-       /* int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            NavUtils.navigateUpTo(this, new Intent(this, ReceipeCardActivity.class));
-            return true;
-        }*/
-
-
-        onBackPressed();
-        return true;
     }
 }

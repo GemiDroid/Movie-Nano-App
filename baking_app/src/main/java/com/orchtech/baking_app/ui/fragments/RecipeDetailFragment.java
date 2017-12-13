@@ -1,13 +1,12 @@
 package com.orchtech.baking_app.ui.fragments;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -31,7 +31,6 @@ import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 import com.orchtech.baking_app.ui.adapters.IngredientsAdapter;
-import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 import java.util.ArrayList;
 
@@ -57,8 +56,9 @@ public class RecipeDetailFragment extends Fragment {
     public static final String IngredientList = "ingredient_list";
 
 
+    static long CURRENT_POSITION;
+    static boolean isPlaying;
     ArrayList<IngredientsModel> ingredientsModelList;
-
     SimpleExoPlayerView exoPlayer;
     TextView txt_desc;
     SimpleExoPlayer player;
@@ -66,17 +66,17 @@ public class RecipeDetailFragment extends Fragment {
     IngredientsAdapter ingredientsAdapter;
     LinearLayout lin_steps, lin_ingredient;
     RecyclerView rec_ingredients;
+    //  OrientationReceiver receiver;
     LinearLayoutManager linearLayoutManager;
-  //  OrientationReceiver receiver;
+    int currentVisiblePosition = 0;
+    String img_url;
+    // private static final String BCAST_CONFIGCHANGED = "android.intent.action.CONFIGURATION_CHANGED";
     /**
      * The dummy content this fragment is presenting.
      */
 
     private StepsModel mItem;
     private String VideoUrl, StepsDesc;
-    int currentVisiblePosition = 0;
-   // private static final String BCAST_CONFIGCHANGED = "android.intent.action.CONFIGURATION_CHANGED";
-
     private int OrientationMode;
 
     /**
@@ -105,31 +105,32 @@ public class RecipeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
         try {
             if (getArguments().containsKey(ARG_ITEM_ID)) {
                 // Load the dummy content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
 
-                if (getArguments().getString(StepVideoUrl).equals("")) {
-                    VideoUrl = getArguments().getString(StepThumbnail);
-                } else {
-                    VideoUrl = getArguments().getString(StepVideoUrl);
+                if (!getArguments().getString(StepThumbnail).equals("")) {
+                    img_url = getArguments().getString(StepThumbnail);
                 }
+
+
+                VideoUrl = getArguments().getString(StepVideoUrl);
+              /*  }*/
                 StepsDesc = getArguments().getString(StepDesc);
 
-                Activity activity = this.getActivity();
+              /*  Activity activity = this.getActivity();
                 CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
                 if (appBarLayout != null) {
                     appBarLayout.setTitle(StepsDesc);
-                }
+                }*/
             }
         } catch (Exception e) {
 
         }
 
-        OrientationMode=getActivity().getResources().getConfiguration().orientation;
+        OrientationMode = getActivity().getResources().getConfiguration().orientation;
     }
 
     @Override
@@ -152,6 +153,8 @@ public class RecipeDetailFragment extends Fragment {
        /* step_img=rootView.findViewById(R.id.step_img);*/
         txt_desc = rootView.findViewById(R.id.txt_desc);
 
+        step_img = rootView.findViewById(R.id.step_img);
+
         try {
             if (!getArguments().getParcelableArrayList("ingredient_list").equals("")) {
 
@@ -173,6 +176,10 @@ public class RecipeDetailFragment extends Fragment {
             lin_steps.setVisibility(View.VISIBLE);
             txt_desc.setText(StepsDesc);
 
+            Glide.with(getActivity()).load(img_url).into(step_img);
+
+            initializePlayer();
+
             /*try{
                 if(VideoUrl==null){
 
@@ -189,9 +196,10 @@ public class RecipeDetailFragment extends Fragment {
                 step_img.setVisibility(View.GONE);
                 exoPlayer.setVisibility(View.VISIBLE);*/
 
-            initializePlayer();
+
 
             /*}*/
+
         }
 
 
@@ -203,10 +211,19 @@ public class RecipeDetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState != null && lin_ingredient.getVisibility()==View.VISIBLE) {
+        if (savedInstanceState != null && lin_ingredient.getVisibility() == View.VISIBLE) {
 
             (rec_ingredients.getLayoutManager()).scrollToPosition(currentVisiblePosition);
             currentVisiblePosition = 0;
+        } else {
+            if (player != null)
+                player.seekTo(CURRENT_POSITION);
+            try {
+                player.setPlayWhenReady(isPlaying);
+            }
+            catch (Exception e){}
+//            player.stop();
+
         }
     }
 
@@ -240,19 +257,42 @@ public class RecipeDetailFragment extends Fragment {
     }*/
 
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         try {
-            if (lin_ingredient.getVisibility()==View.VISIBLE) {
+            if (lin_ingredient.getVisibility() == View.VISIBLE) {
                 currentVisiblePosition = ((LinearLayoutManager) rec_ingredients.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+            } else {
+                if (player != null)
+                    CURRENT_POSITION = player.getCurrentPosition();
+
+                isPlaying = player.getPlayWhenReady();
+
+                Log.d("CurrentPos", "onSaveInstanceState: " + CURRENT_POSITION);
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+
+
+        }
 
 
     }
+
+
+
+   /* @Override
+    public void onPause() {
+        super.onPause();
+
+        if (player != null) {
+            CURRENT_POSITION = player.getCurrentPosition();
+            player.stop();
+            player.release();
+            player = null;
+        }
+    }*/
 
     private void initializePlayer() {
 
@@ -269,7 +309,6 @@ public class RecipeDetailFragment extends Fragment {
                 new DefaultRenderersFactory(getActivity().getApplicationContext()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
 
-        player.setPlayWhenReady(true);
 
         //player.seekTo(currentWindow, playbackPosition);
 
@@ -291,12 +330,11 @@ public class RecipeDetailFragment extends Fragment {
     public void onStop() {
 
 
-
         releasePlayer();
 
-      //  getActivity().getApplicationContext().unregisterReceiver(receiver);
+        //  getActivity().getApplicationContext().unregisterReceiver(receiver);
 
-      //  LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+        //  LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
         super.onStop();
 
 
@@ -308,6 +346,7 @@ public class RecipeDetailFragment extends Fragment {
            /* playbackPosition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
             playWhenReady = player.getPlayWhenReady();*/
+            CURRENT_POSITION=0;
             player.release();
             player = null;
         }

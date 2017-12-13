@@ -20,6 +20,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+
+
        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,6 +50,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
+
+      /*  actionBar.setTitle(getIntent().getStringExtra("baking_name"));*/
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
@@ -58,8 +63,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             arguments.putString(RecipeDetailFragment.StepVideoUrl,
                     getIntent().getStringExtra(RecipeDetailFragment.StepVideoUrl));
 
-            arguments.putString(RecipeDetailFragment.StepThumbnail,
-                    getIntent().getStringExtra(RecipeDetailFragment.StepThumbnail));
+          arguments.putString(RecipeDetailFragment.StepThumbnail,
+                  getIntent().getStringExtra(RecipeDetailFragment.StepThumbnail));
 
             arguments.putString(RecipeDetailFragment.StepDesc,
                     getIntent().getStringExtra(RecipeDetailFragment.StepDesc));

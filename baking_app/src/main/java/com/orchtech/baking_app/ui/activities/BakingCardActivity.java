@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class BakingCardActivity extends AppCompatActivity {
 
     public static BakingModel bakingModel = null;
-    public static  ArrayList<IngredientsModel> ingerdientList =null;
+    public static ArrayList<IngredientsModel> ingerdientList = null;
     static int x;
     RecyclerView rec_baking_card;
     LinearLayoutManager linearLayoutManager;
@@ -49,6 +49,9 @@ public class BakingCardActivity extends AppCompatActivity {
     Configuration config;
     ProgressBar prog_baking;
     List<BakingModel> bakingModelList;
+
+    static boolean isExpanding = true;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,13 +72,27 @@ public class BakingCardActivity extends AppCompatActivity {
 
         config = getResources().getConfiguration();
         MyAppbar = findViewById(R.id.MyAppbar);
-        MyAppbar.setExpanded(true);
+        MyAppbar.setExpanded(isExpanding);
 
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapse_toolbar);
         collapsingToolbar.setTitle(getString(R.string.app_name));
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
         collapsingToolbar.setContentScrim(getResources().getDrawable(R.drawable.actionbar_background));
+
+        MyAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset == 0) {
+                    isExpanding = true;
+
+                } else {
+                    isExpanding = false;
+                }
+            }
+        });
+
 
         rec_baking_card = findViewById(R.id.rec_baking_card);
 
@@ -158,11 +175,16 @@ public class BakingCardActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         (rec_baking_card.getLayoutManager()).scrollToPosition(currentVisiblePosition);
         currentVisiblePosition = 0;
+
+        MyAppbar.setExpanded(Boolean.valueOf(Preferences.getFromPreference(this, "isExpanding")));
+
+
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         currentVisiblePosition = ((LinearLayoutManager) rec_baking_card.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        Preferences.saveInPreference(this, "isExpanding", "" + isExpanding);
     }
 }

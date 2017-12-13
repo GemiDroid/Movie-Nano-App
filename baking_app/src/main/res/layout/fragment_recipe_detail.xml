@@ -61,6 +61,13 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_20sp" />
 
+            <ImageView
+                android:background="@drawable/ic_launcher_background"
+                android:src="@drawable/common_ic_googleplayservices"
+                android:id="@+id/step_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </LinearLayout>

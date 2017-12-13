@@ -55,12 +55,14 @@ public class BakingCardAdapter extends RecyclerView.Adapter<BakingCardAdapter.Re
         final String CardId = receipesModel.getId();
         final ArrayList<StepsModel> StepsList = receipesModel.getStepsModels();
         final ArrayList<IngredientsModel> IngredientsList1 = receipesModel.getIngredientsModels();
+        final String Name = receipesModel.getName();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ReceipeCardActivity.class);
                 i.putExtra("card_id", CardId);
+                i.putExtra("baking_name", Name);
                 i.putParcelableArrayListExtra("ingredientsList", IngredientsList1);
                 i.putParcelableArrayListExtra("stepsList", StepsList);
                 context.startActivity(i);

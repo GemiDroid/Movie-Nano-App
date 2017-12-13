@@ -16,9 +16,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:visibility="gone"
             android:layout_marginRight="@dimen/cardview_default_elevation"
             android:layout_weight="1"
             android:id="@+id/baking_img"
+            android:scaleType="fitXY"
+            android:src="@drawable/common_ic_googleplayservices"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
