@@ -196,6 +196,7 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     @Override
     public void onDataSetChanged() {
 
+
     }
 
     @Override

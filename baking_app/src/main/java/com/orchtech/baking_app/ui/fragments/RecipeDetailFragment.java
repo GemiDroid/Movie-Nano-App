@@ -31,6 +31,7 @@ import com.orchtech.baking_app.models.StepsModel;
 import com.orchtech.baking_app.ui.activities.ReceipeCardActivity;
 import com.orchtech.baking_app.ui.activities.RecipeDetailActivity;
 import com.orchtech.baking_app.ui.adapters.IngredientsAdapter;
+import com.orchtech.baking_app.widget.SimpleAppWidgetProvider;
 
 import java.util.ArrayList;
 
@@ -103,6 +104,8 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         try {
             if (getArguments().containsKey(ARG_ITEM_ID)) {
                 // Load the dummy content specified by the fragment
@@ -162,7 +165,7 @@ public class RecipeDetailFragment extends Fragment {
                 ingredientsAdapter = new IngredientsAdapter(ingredientsModelList, getActivity());
                 rec_ingredients.setAdapter(ingredientsAdapter);
 
-              /*  SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());*/
+               SimpleAppWidgetProvider.sendRefreshBroadcast(getActivity());
 
             }
         } catch (Exception e) {

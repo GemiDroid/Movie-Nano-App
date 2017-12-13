@@ -2,6 +2,7 @@ package com.orchtech.baking_app.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,18 +18,20 @@ import com.orchtech.baking_app.R;
 public class SimpleAppWidgetProvider extends AppWidgetProvider {
 
 
-   /* public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
+    public static void sendRefreshBroadcast(Context context) {
+        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.setComponent(new ComponentName(context, SimpleAppWidgetProvider.class));
+        context.sendBroadcast(intent);
+    }
+
+  /* public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
     public static final String EXTRA_ITEM = "com.example.edockh.EXTRA_ITEM";
 
     public SimpleAppWidgetProvider() {
         super();
     }
 
-    public static void sendRefreshBroadcast(Context context) {
-        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.setComponent(new ComponentName(context, SimpleAppWidgetProvider.class));
-        context.sendBroadcast(intent);
-    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
