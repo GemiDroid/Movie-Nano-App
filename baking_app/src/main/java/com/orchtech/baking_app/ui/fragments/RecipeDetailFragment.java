@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -278,7 +279,8 @@ public class RecipeDetailFragment extends Fragment {
             }
         } catch (Exception e) {
 
-
+            Toast.makeText(getActivity(), "Movie is still buffering", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
 
