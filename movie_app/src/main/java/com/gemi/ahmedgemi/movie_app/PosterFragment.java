@@ -255,11 +255,11 @@ public class PosterFragment extends Fragment  {
 
 
             } catch (MalformedURLException e) {
-                //   Toast.makeText(getActivity(), "Movies Page has wrong issues,try again(404)", Toast.LENGTH_SHORT).show();
+               Toast.makeText(getActivity(), "Movies Page has wrong issues,try again(404)", Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
-                // Toast.makeText(getActivity(), "Turn on Connection first,try again(404)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Turn on Connection first,try again(404)", Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
-                // Toast.makeText(getActivity(), "Movie Data not found", Toast.LENGTH_SHORT).show();
+              Toast.makeText(getActivity(), "Movie Data not found", Toast.LENGTH_SHORT).show();
             }
 
 

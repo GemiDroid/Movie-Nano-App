@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orchtech.baking_app.R;
 import com.orchtech.baking_app.dummy.DummyContent;
@@ -109,6 +110,9 @@ public class ReceipeCardActivity extends AppCompatActivity {
             Log.d("IngredientsSize", "onCreate: " + IngredientsList.size());
 
         } catch (Exception e) {
+            Toast.makeText(this, "Error parsing argument", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+
         }
 
         recyclerView = findViewById(R.id.item_list);

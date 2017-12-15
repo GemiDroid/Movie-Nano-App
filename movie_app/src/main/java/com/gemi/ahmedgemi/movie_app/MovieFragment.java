@@ -363,7 +363,7 @@ public class MovieFragment extends Fragment {
 
                 }
             } catch (NullPointerException e) {
-//                Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_LONG).show();
+               Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_LONG).show();
             }
 
         }

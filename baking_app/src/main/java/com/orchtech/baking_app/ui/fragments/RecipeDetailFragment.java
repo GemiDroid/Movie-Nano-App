@@ -129,6 +129,8 @@ public class RecipeDetailFragment extends Fragment {
                 }*/
             }
         } catch (Exception e) {
+            Toast.makeText(getActivity(), "Error parsing argument", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
 
         }
 
@@ -226,6 +228,8 @@ public class RecipeDetailFragment extends Fragment {
             try {
                 player.setPlayWhenReady(isPlaying);
             } catch (Exception e) {
+                Toast.makeText(getActivity(), "Still buffering", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
 //            player.stop();
 
