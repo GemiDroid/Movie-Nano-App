@@ -129,7 +129,7 @@ public class RecipeDetailFragment extends Fragment {
                 }*/
             }
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "Error parsing argument", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "Error parsing argument", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
@@ -137,6 +137,16 @@ public class RecipeDetailFragment extends Fragment {
         OrientationMode = getActivity().getResources().getConfiguration().orientation;
 
 
+    }
+
+    @Override
+    public void onResume() {
+
+
+        if (player!=null)
+            Toast.makeText(getActivity(), "Player is resumed ", Toast.LENGTH_SHORT).show();
+
+        super.onResume();
     }
 
 
@@ -228,7 +238,7 @@ public class RecipeDetailFragment extends Fragment {
             try {
                 player.setPlayWhenReady(isPlaying);
             } catch (Exception e) {
-                Toast.makeText(getActivity(), "Still buffering", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getActivity(), "Still buffering", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 //            player.stop();
@@ -283,7 +293,7 @@ public class RecipeDetailFragment extends Fragment {
             }
         } catch (Exception e) {
 
-            Toast.makeText(getActivity(), "Movie is still buffering", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "Movie is still buffering", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
