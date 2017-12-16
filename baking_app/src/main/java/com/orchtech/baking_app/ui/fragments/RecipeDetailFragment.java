@@ -143,8 +143,9 @@ public class RecipeDetailFragment extends Fragment {
     public void onResume() {
 
         try {
-            if (player != null)
-                Toast.makeText(getActivity(), "Player is resumed ", Toast.LENGTH_SHORT).show();
+               if (player == null) {
+                initializePlayer();
+            }
         }
         catch (Exception e){e.printStackTrace();}
         super.onResume();
