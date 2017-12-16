@@ -142,10 +142,11 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onResume() {
 
-
-        if (player!=null)
-            Toast.makeText(getActivity(), "Player is resumed ", Toast.LENGTH_SHORT).show();
-
+        try {
+            if (player != null)
+                Toast.makeText(getActivity(), "Player is resumed ", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){e.printStackTrace();}
         super.onResume();
     }
 
