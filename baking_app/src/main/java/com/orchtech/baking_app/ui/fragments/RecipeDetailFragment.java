@@ -207,6 +207,7 @@ public class RecipeDetailFragment extends Fragment {
                 if (player != null) {
 
                     player.seekTo(CURRENT_POSITION);
+                    player.setPlayWhenReady(isPlaying);
                 }
            /* }*/
 
