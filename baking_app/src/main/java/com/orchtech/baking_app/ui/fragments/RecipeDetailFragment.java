@@ -144,6 +144,9 @@ public class RecipeDetailFragment extends Fragment {
         try {
             if (player == null) {
                 initializePlayer();
+
+               player.seekTo(CURRENT_POSITION);
+               player.setPlayWhenReady(isPlaying);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,13 +202,13 @@ public class RecipeDetailFragment extends Fragment {
 
             initializePlayer();
 
-            if (savedInstanceState != null) {
+           /* if (savedInstanceState != null) {*/
 
                 if (player != null) {
 
                     player.seekTo(CURRENT_POSITION);
                 }
-            }
+           /* }*/
 
             /*try{
                 if(VideoUrl==null){
@@ -364,7 +367,12 @@ public class RecipeDetailFragment extends Fragment {
     public void onStop() {
 
 
+        CURRENT_POSITION=player.getCurrentPosition();
+        isPlaying=player.getPlayWhenReady();
+
         releasePlayer();
+
+
 
       /*  CURRENT_POSITION = 0;*/
 

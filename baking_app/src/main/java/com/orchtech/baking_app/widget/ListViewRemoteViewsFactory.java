@@ -214,11 +214,15 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
 //        return listItemList.size();
-        if (BakingCardActivity.ingerdientList.size() > 0) {
-            return BakingCardActivity.ingerdientList.size();
-        } else {
-            return 0;
+
+        if(BakingCardActivity.ingerdientList != null) {
+
+            if (BakingCardActivity.ingerdientList.size() > 0) {
+                return BakingCardActivity.ingerdientList.size();
+            }
         }
+
+        return 0;
     }
 
 
