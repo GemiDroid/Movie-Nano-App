@@ -16,13 +16,15 @@ import com.orchtech.baking_app.ui.fragments.RecipeDetailFragment;
  */
 public class RecipeDetailActivity extends AppCompatActivity {
 
+    RecipeDetailFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
 
-       android.support.v7.widget.Toolbar toolbar = findViewById(R.id.detail_toolbar);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
        /* FloatingActionButton fab = findViewById(R.id.fab);
@@ -63,8 +65,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             arguments.putString(RecipeDetailFragment.StepVideoUrl,
                     getIntent().getStringExtra(RecipeDetailFragment.StepVideoUrl));
 
-          arguments.putString(RecipeDetailFragment.StepThumbnail,
-                  getIntent().getStringExtra(RecipeDetailFragment.StepThumbnail));
+            arguments.putString(RecipeDetailFragment.StepThumbnail,
+                    getIntent().getStringExtra(RecipeDetailFragment.StepThumbnail));
 
             arguments.putString(RecipeDetailFragment.StepDesc,
                     getIntent().getStringExtra(RecipeDetailFragment.StepDesc));
@@ -73,7 +75,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     getIntent().getParcelableArrayListExtra(RecipeDetailFragment.IngredientList));
 
 
-            RecipeDetailFragment fragment = new RecipeDetailFragment();
+            if (fragment == null) {
+                fragment = new RecipeDetailFragment();
+            }
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, fragment)
@@ -81,10 +85,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
 
-
     }
 
-  @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
        /* int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -100,7 +103,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }*/
 
 
-       onBackPressed();
+        onBackPressed();
         return true;
     }
 }

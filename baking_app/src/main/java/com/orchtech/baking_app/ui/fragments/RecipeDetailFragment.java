@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -143,11 +142,12 @@ public class RecipeDetailFragment extends Fragment {
     public void onResume() {
 
         try {
-               if (player == null) {
+            if (player == null) {
                 initializePlayer();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e){e.printStackTrace();}
         super.onResume();
     }
 
@@ -199,6 +199,14 @@ public class RecipeDetailFragment extends Fragment {
 
             initializePlayer();
 
+            if (savedInstanceState != null) {
+
+                if (player != null) {
+
+                    player.seekTo(CURRENT_POSITION);
+                }
+            }
+
             /*try{
                 if(VideoUrl==null){
 
@@ -230,21 +238,25 @@ public class RecipeDetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState != null && lin_ingredient.getVisibility() == View.VISIBLE) {
 
-            (rec_ingredients.getLayoutManager()).scrollToPosition(currentVisiblePosition);
-            currentVisiblePosition = 0;
-        } else {
-            if (player != null)
-                player.seekTo(CURRENT_POSITION);
-            try {
-                player.setPlayWhenReady(isPlaying);
-            } catch (Exception e) {
-                //  Toast.makeText(getActivity(), "Still buffering", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
+        if (savedInstanceState != null) {
+
+            if (lin_ingredient.getVisibility() == View.VISIBLE) {
+
+                (rec_ingredients.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+                currentVisiblePosition = 0;
+            } else {
+                if (player != null)
+                    player.seekTo(CURRENT_POSITION);
+                try {
+                    player.setPlayWhenReady(isPlaying);
+                } catch (Exception e) {
+                    //  Toast.makeText(getActivity(), "Still buffering", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
 //            player.stop();
 
+            }
         }
     }
 
