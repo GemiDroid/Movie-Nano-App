@@ -175,12 +175,11 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
                 AppWidgetManager.INVALID_APPWIDGET_ID);
 
 
-
 //        listItemList = intent.getParcelableArrayListExtra("");
 
-      //  BakingCardActivity.bakingModel=new BakingModel();
+        //  BakingCardActivity.bakingModel=new BakingModel();
 
-      // populateListItem();
+        // populateListItem();
     }
 
     private void populateListItem() {
@@ -215,7 +214,11 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
     @Override
     public int getCount() {
 //        return listItemList.size();
-        return BakingCardActivity.ingerdientList.size();
+        if (BakingCardActivity.ingerdientList.size() > 0) {
+            return BakingCardActivity.ingerdientList.size();
+        } else {
+            return 0;
+        }
     }
 
 
@@ -240,9 +243,9 @@ public class ListViewRemoteViewsFactory implements RemoteViewsFactory {
                 context.getPackageName(), R.layout.recipe_ingredient_widget_list_item);
 //        IngredientsModel listItem = listItemList.get(position);
         IngredientsModel listItem = BakingCardActivity.ingerdientList.get(position);
-        remoteView.setTextViewText(R.id.ingredient_tv, "Ingredient: "+listItem.getIngredient());
-        remoteView.setTextViewText(R.id.measure_tv, "Measure: "+listItem.getMeasure());
-        remoteView.setTextViewText(R.id.quantity_tv, "Quantity: "+listItem.getQuantity());
+        remoteView.setTextViewText(R.id.ingredient_tv, "Ingredient: " + listItem.getIngredient());
+        remoteView.setTextViewText(R.id.measure_tv, "Measure: " + listItem.getMeasure());
+        remoteView.setTextViewText(R.id.quantity_tv, "Quantity: " + listItem.getQuantity());
 
         return remoteView;
     }
